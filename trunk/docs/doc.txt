@@ -1,1 +1,0 @@
-"Hello, documents, this is an edit from trunk" 
