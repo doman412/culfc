@@ -1,1 +1,1 @@
-"Hello, documents. This is Tom" 
+This is the merged file.
