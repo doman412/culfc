@@ -13,7 +13,8 @@ typedef enum {
 	SET_KP,
 	SET_KI,
 	SET_KD,
-	SET_SPEED
+	SET_SPEED,
+	SET_STEERING_ANGLE
 		
 } ExternalCommand;
 
