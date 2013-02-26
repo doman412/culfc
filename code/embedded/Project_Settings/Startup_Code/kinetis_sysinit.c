@@ -1,15 +1,11 @@
 /*
  *    kinetis_sysinit.c - Default init routines for
  *                     		Kinetis ARM systems
- *    Copyright ï¿½ 2010 Freescale semiConductor Inc. All Rights Reserved.
+ *    Copyright © 2010 Freescale semiConductor Inc. All Rights Reserved.
  */
 
 #include "kinetis_sysinit.h"
 #include "derivative.h"
-#include "camera_control.h"
-#include "adc.h"
-#include "button.h"
-#include "uart.h"
 
 typedef void (*const tIsrFunc)(void);
 typedef struct {
@@ -18,6 +14,10 @@ typedef struct {
 } tVectorTable;
 
 extern uint32_t __vector_table[];
+
+extern void BT_REC(void);
+extern void ftm1_isr(void);
+extern void button_mode_toggle(void);
 
 #pragma overload void __init_hardware();
 void __init_hardware()
@@ -126,7 +126,7 @@ static __declspec(vectortable) tVectorTable __vect_table = { /* Interrupt vector
    (tIsrFunc)UNASSIGNED_ISR,                               /* 58 (0x000000E8) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 59 (0x000000EC) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 60 (0x000000F0) (prior: -) */
-   (tIsrFunc)Uart0Isr,                             		   /* 61 (0x000000F4) (prior: -) */
+   (tIsrFunc)BT_REC,                               /* 61 (0x000000F4) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 62 (0x000000F8) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 63 (0x000000FC) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 64 (0x00000100) (prior: -) */
@@ -138,18 +138,18 @@ static __declspec(vectortable) tVectorTable __vect_table = { /* Interrupt vector
    (tIsrFunc)UNASSIGNED_ISR,                               /* 70 (0x00000118) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 71 (0x0000011C) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 72 (0x00000120) (prior: -) */
-   (tIsrFunc)HandleCameraData,                               /* 73 (0x00000124) (prior: -) */
+   (tIsrFunc)UNASSIGNED_ISR,                               /* 73 (0x00000124) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 74 (0x00000128) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 75 (0x0000012C) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 76 (0x00000130) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 77 (0x00000134) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 78 (0x00000138) (prior: -) */
-   (tIsrFunc)UNASSIGNED_ISR,                               /* 79 (0x0000013C) (prior: -) */
-   (tIsrFunc)CamFalling,                               /* 80 (0x00000140) (prior: -) */
+   (tIsrFunc)ftm1_isr,                               /* 79 (0x0000013C) (prior: -) */
+   (tIsrFunc)UNASSIGNED_ISR,                               /* 80 (0x00000140) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 81 (0x00000144) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 82 (0x00000148) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 83 (0x0000014C) (prior: -) */
-   (tIsrFunc)PITExpiredISR,                               /* 84 (0x00000150) (prior: -) */
+   (tIsrFunc)UNASSIGNED_ISR,                               /* 84 (0x00000150) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 85 (0x00000154) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 86 (0x00000158) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 87 (0x0000015C) (prior: -) */
@@ -170,7 +170,7 @@ static __declspec(vectortable) tVectorTable __vect_table = { /* Interrupt vector
    (tIsrFunc)UNASSIGNED_ISR,                               /* 102 (0x00000198) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 103 (0x0000019C) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 104 (0x000001A0) (prior: -) */
-   (tIsrFunc)portc_isr,                               /* 105 (0x000001A4) (prior: -) */
+   (tIsrFunc)button_mode_toggle,                               /* 105 (0x000001A4) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 106 (0x000001A8) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 107 (0x000001AC) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 108 (0x000001B0) (prior: -) */

@@ -3,8 +3,8 @@
 
 <cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
 	<storageModule moduleId="org.eclipse.cdt.core.settings">
-		<cconfiguration id="com.freescale.arm.cdt.toolchain.config.arm.release.1747435767">
-			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.freescale.arm.cdt.toolchain.config.arm.release.1747435767" moduleId="org.eclipse.cdt.core.settings" name="PK40X256_INTERNAL_RAM">
+		<cconfiguration id="com.freescale.arm.cdt.toolchain.config.arm.release.1831279463">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.freescale.arm.cdt.toolchain.config.arm.release.1831279463" moduleId="org.eclipse.cdt.core.settings" name="MK40DX256Z_INTERNAL_RAM">
 				<externalSettings/>
 				<extensions>
 					<extension id="org.eclipse.cdt.managedbuilder.core.ManagedBuildManager" point="org.eclipse.cdt.core.ScannerInfoProvider"/>
@@ -23,40 +23,40 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="afx" artifactName="milestone3Demo" buildProperties="" cleanCommand="&quot;${system:ECLIPSE_HOME}/../gnu/bin/rm&quot; -f" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;com.freescale.core.ide.cdt.errorParsers.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser;com.freescale.core.ide.cdt.errorParsers.LnkErrorParser;com.freescale.core.ide.cdt.errorParsers.AsmErrorParser;com.freescale.core.ide.cdt.errorParsers.CobjErrorParser;com.freescale.core.ide.cdt.errorParsers.IcodeErrorParser;com.freescale.core.ide.cdt.errorParsers.LltErrorParser;com.freescale.core.ide.cdt.errorParsers.MwfeErrorParser;com.freescale.core.ide.cdt.errorParsers.MwarmErrorParser" id="com.freescale.arm.cdt.toolchain.config.arm.release.1747435767" name="PK40X256_INTERNAL_RAM" parent="com.freescale.arm.cdt.toolchain.config.arm.release">
-					<folderInfo id="com.freescale.arm.cdt.toolchain.config.arm.release.1747435767." name="/" resourcePath="">
-						<toolChain id="com.freescale.arm.cdt.toolchain.arm.release.1407036103" name="ARM Toolchain" superClass="com.freescale.arm.cdt.toolchain.arm.release">
-							<targetPlatform id="com.freescale.arm.cdt.toolchain.targetplatform.953021255" isAbstract="false" name="ARM Target Platform" superClass="com.freescale.arm.cdt.toolchain.targetplatform"/>
-							<builder buildPath="${ProjDirPath}/PK40X256_INTERNAL_RAM" id="com.freescale.arm.cdt.toolchain.builder.1046356212" name="GNU Make Builder.PK40X256_INTERNAL_RAM" parallelBuildWorkspaceOn="true" parallelizationNumber="-1" superClass="com.freescale.arm.cdt.toolchain.builder"/>
-							<tool id="com.freescale.arm.cdt.toolchain.linker.1878327848" name="ARM Linker" superClass="com.freescale.arm.cdt.toolchain.linker">
-								<option id="com.freescale.arm.cdt.toolchain.linker.libraries.libSearch.1084264250" superClass="com.freescale.arm.cdt.toolchain.linker.libraries.libSearch" valueType="stringList">
+				<configuration artifactExtension="afx" artifactName="OptimusPrime" buildProperties="" cleanCommand="&quot;${system:ECLIPSE_HOME}/../gnu/bin/rm&quot; -f" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;com.freescale.core.ide.cdt.errorParsers.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser;com.freescale.core.ide.cdt.errorParsers.LnkErrorParser;com.freescale.core.ide.cdt.errorParsers.AsmErrorParser;com.freescale.core.ide.cdt.errorParsers.CobjErrorParser;com.freescale.core.ide.cdt.errorParsers.IcodeErrorParser;com.freescale.core.ide.cdt.errorParsers.LltErrorParser;com.freescale.core.ide.cdt.errorParsers.MwfeErrorParser;com.freescale.core.ide.cdt.errorParsers.MwarmErrorParser" id="com.freescale.arm.cdt.toolchain.config.arm.release.1831279463" name="MK40DX256Z_INTERNAL_RAM" parent="com.freescale.arm.cdt.toolchain.config.arm.release">
+					<folderInfo id="com.freescale.arm.cdt.toolchain.config.arm.release.1831279463." name="/" resourcePath="">
+						<toolChain id="com.freescale.arm.cdt.toolchain.arm.release.1788227982" name="ARM Toolchain" superClass="com.freescale.arm.cdt.toolchain.arm.release">
+							<targetPlatform id="com.freescale.arm.cdt.toolchain.targetplatform.1121705540" isAbstract="false" name="ARM Target Platform" superClass="com.freescale.arm.cdt.toolchain.targetplatform"/>
+							<builder buildPath="${ProjDirPath}/MK40DX256Z_INTERNAL_RAM" id="com.freescale.arm.cdt.toolchain.builder.1778901209" name="GNU Make Builder.MK40DX256Z_INTERNAL_RAM" parallelBuildWorkspaceOn="true" parallelizationNumber="-1" superClass="com.freescale.arm.cdt.toolchain.builder"/>
+							<tool id="com.freescale.arm.cdt.toolchain.linker.997682666" name="ARM Linker" superClass="com.freescale.arm.cdt.toolchain.linker">
+								<option id="com.freescale.arm.cdt.toolchain.linker.libraries.libSearch.987729146" superClass="com.freescale.arm.cdt.toolchain.linker.libraries.libSearch" valueType="stringList">
 									<listOptionValue builtIn="false" value="&quot;${MCUToolsBaseDir}/ARM_EABI_Support/ewl/lib&quot;"/>
 								</option>
-								<option id="com.freescale.arm.cdt.toolchain.linker.commandFile.84888114" superClass="com.freescale.arm.cdt.toolchain.linker.commandFile" value="${ProjDirPath}/Project_Settings/Linker_Files/PK40X256_ram.lcf" valueType="string"/>
-								<inputType id="com.freescale.arm.cdt.toolchain.linker.input.1903320681" name="ARM Linker Input" superClass="com.freescale.arm.cdt.toolchain.linker.input">
+								<option id="com.freescale.arm.cdt.toolchain.linker.commandFile.1156344993" superClass="com.freescale.arm.cdt.toolchain.linker.commandFile" value="${ProjDirPath}/Project_Settings/Linker_Files/MK40DX256Z_ram.lcf" valueType="string"/>
+								<inputType id="com.freescale.arm.cdt.toolchain.linker.input.144414640" name="ARM Linker Input" superClass="com.freescale.arm.cdt.toolchain.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
 									<additionalInput kind="additionaldependency" paths="$(LCF_SRCS)"/>
 								</inputType>
 							</tool>
-							<tool id="com.freescale.arm.cdt.toolchain.compiler.1029681377" name="ARM Compiler" superClass="com.freescale.arm.cdt.toolchain.compiler">
-								<option id="com.freescale.arm.cdt.toolchain.armCpp.input.userIncludes.876656136" superClass="com.freescale.arm.cdt.toolchain.armCpp.input.userIncludes" valueType="includePath">
+							<tool id="com.freescale.arm.cdt.toolchain.compiler.149874470" name="ARM Compiler" superClass="com.freescale.arm.cdt.toolchain.compiler">
+								<option id="com.freescale.arm.cdt.toolchain.armCpp.input.userIncludes.357650348" superClass="com.freescale.arm.cdt.toolchain.armCpp.input.userIncludes" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Project_Headers&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${MCUToolsBaseDir}/ARM_EABI_Support/ewl/EWL_C/include&quot;"/>
 								</option>
-								<option id="com.freescale.arm.cdt.toolchain.armCpp.language.cpp.exceptions.1418927109" superClass="com.freescale.arm.cdt.toolchain.armCpp.language.cpp.exceptions" value="false" valueType="boolean"/>
-								<inputType id="com.freescale.arm.cdt.toolchain.armCpp.cSource.1960308535" name="ARM C/C++ Compiler" superClass="com.freescale.arm.cdt.toolchain.armCpp.cSource"/>
+								<option id="com.freescale.arm.cdt.toolchain.armCpp.language.cpp.exceptions.482665771" superClass="com.freescale.arm.cdt.toolchain.armCpp.language.cpp.exceptions" value="false" valueType="boolean"/>
+								<inputType id="com.freescale.arm.cdt.toolchain.armCpp.cSource.2104535326" name="ARM C/C++ Compiler" superClass="com.freescale.arm.cdt.toolchain.armCpp.cSource"/>
 							</tool>
-							<tool id="com.freescale.arm.cdt.toolchain.assembler.1492806421" name="ARM Assembler" superClass="com.freescale.arm.cdt.toolchain.assembler">
-								<inputType id="com.freescale.arm.cdt.toolchain.armAsm.input.690060027" name="ARM Assembler Input" superClass="com.freescale.arm.cdt.toolchain.armAsm.input"/>
+							<tool id="com.freescale.arm.cdt.toolchain.assembler.294898227" name="ARM Assembler" superClass="com.freescale.arm.cdt.toolchain.assembler">
+								<inputType id="com.freescale.arm.cdt.toolchain.armAsm.input.805787991" name="ARM Assembler Input" superClass="com.freescale.arm.cdt.toolchain.armAsm.input"/>
 							</tool>
-							<tool id="com.freescale.arm.cdt.toolchain.preproc.1498551393" name="ARM Preprocessor" superClass="com.freescale.arm.cdt.toolchain.preproc"/>
-							<tool id="com.freescale.arm.cdt.toolchain.disassembler.828911224" name="ARM Disassembler" superClass="com.freescale.arm.cdt.toolchain.disassembler"/>
+							<tool id="com.freescale.arm.cdt.toolchain.preproc.849229464" name="ARM Preprocessor" superClass="com.freescale.arm.cdt.toolchain.preproc"/>
+							<tool id="com.freescale.arm.cdt.toolchain.disassembler.1660959968" name="ARM Disassembler" superClass="com.freescale.arm.cdt.toolchain.disassembler"/>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="com.freescale.arm.cdt.toolchain.config.arm.release.1747435767.Project_Settings/Linker_Files/PK40X256_flash.lcf" name="PK40X256_flash.lcf" rcbsApplicability="disable" resourcePath="Project_Settings/Linker_Files/PK40X256_flash.lcf" toolsToInvoke="com.freescale.arm.cdt.toolchain.linker.1878327848.1735158714">
-						<tool id="com.freescale.arm.cdt.toolchain.linker.1878327848.1735158714" name="ARM Linker" superClass="com.freescale.arm.cdt.toolchain.linker.1878327848">
-							<inputType id="com.freescale.arm.cdt.toolchain.linker.input.1497884253" name="ARM Linker Input" superClass="com.freescale.arm.cdt.toolchain.linker.input">
+					<fileInfo id="com.freescale.arm.cdt.toolchain.config.arm.release.1831279463.Project_Settings/Linker_Files/MK40DX256Z_flash.lcf" name="MK40DX256Z_flash.lcf" rcbsApplicability="disable" resourcePath="Project_Settings/Linker_Files/MK40DX256Z_flash.lcf" toolsToInvoke="com.freescale.arm.cdt.toolchain.linker.997682666.1381222834">
+						<tool id="com.freescale.arm.cdt.toolchain.linker.997682666.1381222834" name="ARM Linker" superClass="com.freescale.arm.cdt.toolchain.linker.997682666">
+							<inputType id="com.freescale.arm.cdt.toolchain.linker.input.1826286165" name="ARM Linker Input" superClass="com.freescale.arm.cdt.toolchain.linker.input">
 								<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 								<additionalInput kind="additionalinput" paths="$(LIBS)"/>
 								<additionalInput kind="additionaldependency" paths="$(LCF_SRCS)"/>
@@ -64,7 +64,7 @@
 						</tool>
 					</fileInfo>
 					<sourceEntries>
-						<entry excluding="Project_Settings/Linker_Files/PK40X256_flash.lcf" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Project_Settings/Linker_Files/MK40DX256Z_flash.lcf" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -260,7 +260,7 @@
 						<parser enabled="true"/>
 					</scannerInfoProvider>
 				</profile>
-				<scannerConfigBuildInfo instanceId="com.freescale.arm.cdt.toolchain.config.arm.release.1747435767;com.freescale.arm.cdt.toolchain.config.arm.release.1747435767.;com.freescale.arm.cdt.toolchain.compiler.1029681377;com.freescale.arm.cdt.toolchain.armCpp.cSource.1960308535">
+				<scannerConfigBuildInfo instanceId="com.freescale.arm.cdt.toolchain.config.arm.release.1831279463;com.freescale.arm.cdt.toolchain.config.arm.release.1831279463.;com.freescale.arm.cdt.toolchain.compiler.149874470;com.freescale.arm.cdt.toolchain.armCpp.cSource.2104535326">
 					<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.freescale.arm.cdt.toolchain.c.symbols.discoveryProfile"/>
 					<profile id="com.freescale.arm.cdt.toolchain.c.symbols.discoveryProfile">
 						<buildOutputProvider>
@@ -453,7 +453,7 @@
 						</scannerInfoProvider>
 					</profile>
 				</scannerConfigBuildInfo>
-				<scannerConfigBuildInfo instanceId="com.freescale.arm.cdt.toolchain.config.arm.release.385927877;com.freescale.arm.cdt.toolchain.config.arm.release.385927877.;com.freescale.arm.cdt.toolchain.compiler.350957258;com.freescale.arm.cdt.toolchain.armCpp.cSource.82368441">
+				<scannerConfigBuildInfo instanceId="com.freescale.arm.cdt.toolchain.config.arm.release.1162626181;com.freescale.arm.cdt.toolchain.config.arm.release.1162626181.;com.freescale.arm.cdt.toolchain.compiler.186869955;com.freescale.arm.cdt.toolchain.armCpp.cSource.78896829">
 					<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.freescale.arm.cdt.toolchain.c.symbols.discoveryProfile"/>
 					<profile id="com.freescale.arm.cdt.toolchain.c.symbols.discoveryProfile">
 						<buildOutputProvider>
@@ -652,8 +652,8 @@
 			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 		</cconfiguration>
-		<cconfiguration id="com.freescale.arm.cdt.toolchain.config.arm.release.385927877">
-			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.freescale.arm.cdt.toolchain.config.arm.release.385927877" moduleId="org.eclipse.cdt.core.settings" name="PK40X256_INTERNAL_FLASH">
+		<cconfiguration id="com.freescale.arm.cdt.toolchain.config.arm.release.1162626181">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="com.freescale.arm.cdt.toolchain.config.arm.release.1162626181" moduleId="org.eclipse.cdt.core.settings" name="MK40DX256Z_INTERNAL_FLASH">
 				<externalSettings/>
 				<extensions>
 					<extension id="org.eclipse.cdt.managedbuilder.core.ManagedBuildManager" point="org.eclipse.cdt.core.ScannerInfoProvider"/>
@@ -672,40 +672,40 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactExtension="afx" artifactName="milestone3Demo" buildProperties="" cleanCommand="&quot;${system:ECLIPSE_HOME}/../gnu/bin/rm&quot; -f" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;com.freescale.core.ide.cdt.errorParsers.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser;com.freescale.core.ide.cdt.errorParsers.LnkErrorParser;com.freescale.core.ide.cdt.errorParsers.AsmErrorParser;com.freescale.core.ide.cdt.errorParsers.CobjErrorParser;com.freescale.core.ide.cdt.errorParsers.IcodeErrorParser;com.freescale.core.ide.cdt.errorParsers.LltErrorParser;com.freescale.core.ide.cdt.errorParsers.MwfeErrorParser;com.freescale.core.ide.cdt.errorParsers.MwarmErrorParser" id="com.freescale.arm.cdt.toolchain.config.arm.release.385927877" name="PK40X256_INTERNAL_FLASH" parent="com.freescale.arm.cdt.toolchain.config.arm.release">
-					<folderInfo id="com.freescale.arm.cdt.toolchain.config.arm.release.385927877." name="/" resourcePath="">
-						<toolChain id="com.freescale.arm.cdt.toolchain.arm.release.993297231" name="ARM Toolchain" superClass="com.freescale.arm.cdt.toolchain.arm.release">
-							<targetPlatform id="com.freescale.arm.cdt.toolchain.targetplatform.1865273795" isAbstract="false" name="ARM Target Platform" superClass="com.freescale.arm.cdt.toolchain.targetplatform"/>
-							<builder buildPath="${ProjDirPath}/PK40X256_INTERNAL_FLASH" id="com.freescale.arm.cdt.toolchain.builder.516170775" name="GNU Make Builder.PK40X256_INTERNAL_FLASH" superClass="com.freescale.arm.cdt.toolchain.builder"/>
-							<tool id="com.freescale.arm.cdt.toolchain.linker.1904693826" name="ARM Linker" superClass="com.freescale.arm.cdt.toolchain.linker">
-								<option id="com.freescale.arm.cdt.toolchain.linker.libraries.libSearch.707789857" superClass="com.freescale.arm.cdt.toolchain.linker.libraries.libSearch" valueType="stringList">
+				<configuration artifactExtension="afx" artifactName="OptimusPrime" buildProperties="" cleanCommand="&quot;${system:ECLIPSE_HOME}/../gnu/bin/rm&quot; -f" description="" errorParsers="org.eclipse.cdt.core.MakeErrorParser;com.freescale.core.ide.cdt.errorParsers.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser;com.freescale.core.ide.cdt.errorParsers.LnkErrorParser;com.freescale.core.ide.cdt.errorParsers.AsmErrorParser;com.freescale.core.ide.cdt.errorParsers.CobjErrorParser;com.freescale.core.ide.cdt.errorParsers.IcodeErrorParser;com.freescale.core.ide.cdt.errorParsers.LltErrorParser;com.freescale.core.ide.cdt.errorParsers.MwfeErrorParser;com.freescale.core.ide.cdt.errorParsers.MwarmErrorParser" id="com.freescale.arm.cdt.toolchain.config.arm.release.1162626181" name="MK40DX256Z_INTERNAL_FLASH" parent="com.freescale.arm.cdt.toolchain.config.arm.release">
+					<folderInfo id="com.freescale.arm.cdt.toolchain.config.arm.release.1162626181." name="/" resourcePath="">
+						<toolChain id="com.freescale.arm.cdt.toolchain.arm.release.1066911322" name="ARM Toolchain" superClass="com.freescale.arm.cdt.toolchain.arm.release">
+							<targetPlatform id="com.freescale.arm.cdt.toolchain.targetplatform.1679697349" isAbstract="false" name="ARM Target Platform" superClass="com.freescale.arm.cdt.toolchain.targetplatform"/>
+							<builder buildPath="${ProjDirPath}/MK40DX256Z_INTERNAL_FLASH" id="com.freescale.arm.cdt.toolchain.builder.1967631936" name="GNU Make Builder.MK40DX256Z_INTERNAL_FLASH" parallelBuildWorkspaceOn="true" parallelizationNumber="-1" superClass="com.freescale.arm.cdt.toolchain.builder"/>
+							<tool id="com.freescale.arm.cdt.toolchain.linker.240112094" name="ARM Linker" superClass="com.freescale.arm.cdt.toolchain.linker">
+								<option id="com.freescale.arm.cdt.toolchain.linker.libraries.libSearch.854687678" superClass="com.freescale.arm.cdt.toolchain.linker.libraries.libSearch" valueType="stringList">
 									<listOptionValue builtIn="false" value="&quot;${MCUToolsBaseDir}/ARM_EABI_Support/ewl/lib&quot;"/>
 								</option>
-								<option id="com.freescale.arm.cdt.toolchain.linker.commandFile.1463840687" superClass="com.freescale.arm.cdt.toolchain.linker.commandFile" value="${ProjDirPath}/Project_Settings/Linker_Files/PK40X256_flash.lcf" valueType="string"/>
-								<inputType id="com.freescale.arm.cdt.toolchain.linker.input.1225064704" name="ARM Linker Input" superClass="com.freescale.arm.cdt.toolchain.linker.input">
+								<option id="com.freescale.arm.cdt.toolchain.linker.commandFile.688212827" superClass="com.freescale.arm.cdt.toolchain.linker.commandFile" value="${ProjDirPath}/Project_Settings/Linker_Files/MK40DX256Z_flash.lcf" valueType="string"/>
+								<inputType id="com.freescale.arm.cdt.toolchain.linker.input.1704564364" name="ARM Linker Input" superClass="com.freescale.arm.cdt.toolchain.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
 									<additionalInput kind="additionaldependency" paths="$(LCF_SRCS)"/>
 								</inputType>
 							</tool>
-							<tool id="com.freescale.arm.cdt.toolchain.compiler.350957258" name="ARM Compiler" superClass="com.freescale.arm.cdt.toolchain.compiler">
-								<option id="com.freescale.arm.cdt.toolchain.armCpp.input.userIncludes.472674580" superClass="com.freescale.arm.cdt.toolchain.armCpp.input.userIncludes" valueType="includePath">
+							<tool id="com.freescale.arm.cdt.toolchain.compiler.186869955" name="ARM Compiler" superClass="com.freescale.arm.cdt.toolchain.compiler">
+								<option id="com.freescale.arm.cdt.toolchain.armCpp.input.userIncludes.1829613424" superClass="com.freescale.arm.cdt.toolchain.armCpp.input.userIncludes" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Project_Headers&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${MCUToolsBaseDir}/ARM_EABI_Support/ewl/EWL_C/include&quot;"/>
 								</option>
-								<option id="com.freescale.arm.cdt.toolchain.armCpp.language.cpp.exceptions.1964022934" superClass="com.freescale.arm.cdt.toolchain.armCpp.language.cpp.exceptions" value="false" valueType="boolean"/>
-								<inputType id="com.freescale.arm.cdt.toolchain.armCpp.cSource.82368441" name="ARM C/C++ Compiler" superClass="com.freescale.arm.cdt.toolchain.armCpp.cSource"/>
+								<option id="com.freescale.arm.cdt.toolchain.armCpp.language.cpp.exceptions.376787584" superClass="com.freescale.arm.cdt.toolchain.armCpp.language.cpp.exceptions" value="false" valueType="boolean"/>
+								<inputType id="com.freescale.arm.cdt.toolchain.armCpp.cSource.78896829" name="ARM C/C++ Compiler" superClass="com.freescale.arm.cdt.toolchain.armCpp.cSource"/>
 							</tool>
-							<tool id="com.freescale.arm.cdt.toolchain.assembler.383976760" name="ARM Assembler" superClass="com.freescale.arm.cdt.toolchain.assembler">
-								<inputType id="com.freescale.arm.cdt.toolchain.armAsm.input.400088458" name="ARM Assembler Input" superClass="com.freescale.arm.cdt.toolchain.armAsm.input"/>
+							<tool id="com.freescale.arm.cdt.toolchain.assembler.1983692367" name="ARM Assembler" superClass="com.freescale.arm.cdt.toolchain.assembler">
+								<inputType id="com.freescale.arm.cdt.toolchain.armAsm.input.506877043" name="ARM Assembler Input" superClass="com.freescale.arm.cdt.toolchain.armAsm.input"/>
 							</tool>
-							<tool id="com.freescale.arm.cdt.toolchain.preproc.1685914198" name="ARM Preprocessor" superClass="com.freescale.arm.cdt.toolchain.preproc"/>
-							<tool id="com.freescale.arm.cdt.toolchain.disassembler.392397076" name="ARM Disassembler" superClass="com.freescale.arm.cdt.toolchain.disassembler"/>
+							<tool id="com.freescale.arm.cdt.toolchain.preproc.251525329" name="ARM Preprocessor" superClass="com.freescale.arm.cdt.toolchain.preproc"/>
+							<tool id="com.freescale.arm.cdt.toolchain.disassembler.804968220" name="ARM Disassembler" superClass="com.freescale.arm.cdt.toolchain.disassembler"/>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="com.freescale.arm.cdt.toolchain.config.arm.release.385927877.Project_Settings/Linker_Files/PK40X256_ram.lcf" name="PK40X256_ram.lcf" rcbsApplicability="disable" resourcePath="Project_Settings/Linker_Files/PK40X256_ram.lcf" toolsToInvoke="com.freescale.arm.cdt.toolchain.linker.1904693826.1249598230">
-						<tool id="com.freescale.arm.cdt.toolchain.linker.1904693826.1249598230" name="ARM Linker" superClass="com.freescale.arm.cdt.toolchain.linker.1904693826">
-							<inputType id="com.freescale.arm.cdt.toolchain.linker.input.1451013017" name="ARM Linker Input" superClass="com.freescale.arm.cdt.toolchain.linker.input">
+					<fileInfo id="com.freescale.arm.cdt.toolchain.config.arm.release.1162626181.Project_Settings/Linker_Files/MK40DX256Z_ram.lcf" name="MK40DX256Z_ram.lcf" rcbsApplicability="disable" resourcePath="Project_Settings/Linker_Files/MK40DX256Z_ram.lcf" toolsToInvoke="com.freescale.arm.cdt.toolchain.linker.240112094.424700413">
+						<tool id="com.freescale.arm.cdt.toolchain.linker.240112094.424700413" name="ARM Linker" superClass="com.freescale.arm.cdt.toolchain.linker.240112094">
+							<inputType id="com.freescale.arm.cdt.toolchain.linker.input.500694633" name="ARM Linker Input" superClass="com.freescale.arm.cdt.toolchain.linker.input">
 								<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 								<additionalInput kind="additionalinput" paths="$(LIBS)"/>
 								<additionalInput kind="additionaldependency" paths="$(LCF_SRCS)"/>
@@ -713,7 +713,7 @@
 						</tool>
 					</fileInfo>
 					<sourceEntries>
-						<entry excluding="Project_Settings/Linker_Files/PK40X256_ram.lcf" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Project_Settings/Linker_Files/MK40DX256Z_ram.lcf" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -909,7 +909,7 @@
 						<parser enabled="true"/>
 					</scannerInfoProvider>
 				</profile>
-				<scannerConfigBuildInfo instanceId="com.freescale.arm.cdt.toolchain.config.arm.release.1747435767;com.freescale.arm.cdt.toolchain.config.arm.release.1747435767.;com.freescale.arm.cdt.toolchain.compiler.1029681377;com.freescale.arm.cdt.toolchain.armCpp.cSource.1960308535">
+				<scannerConfigBuildInfo instanceId="com.freescale.arm.cdt.toolchain.config.arm.release.1831279463;com.freescale.arm.cdt.toolchain.config.arm.release.1831279463.;com.freescale.arm.cdt.toolchain.compiler.149874470;com.freescale.arm.cdt.toolchain.armCpp.cSource.2104535326">
 					<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.freescale.arm.cdt.toolchain.c.symbols.discoveryProfile"/>
 					<profile id="com.freescale.arm.cdt.toolchain.c.symbols.discoveryProfile">
 						<buildOutputProvider>
@@ -1102,7 +1102,7 @@
 						</scannerInfoProvider>
 					</profile>
 				</scannerConfigBuildInfo>
-				<scannerConfigBuildInfo instanceId="com.freescale.arm.cdt.toolchain.config.arm.release.385927877;com.freescale.arm.cdt.toolchain.config.arm.release.385927877.;com.freescale.arm.cdt.toolchain.compiler.350957258;com.freescale.arm.cdt.toolchain.armCpp.cSource.82368441">
+				<scannerConfigBuildInfo instanceId="com.freescale.arm.cdt.toolchain.config.arm.release.1162626181;com.freescale.arm.cdt.toolchain.config.arm.release.1162626181.;com.freescale.arm.cdt.toolchain.compiler.186869955;com.freescale.arm.cdt.toolchain.armCpp.cSource.78896829">
 					<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.freescale.arm.cdt.toolchain.c.symbols.discoveryProfile"/>
 					<profile id="com.freescale.arm.cdt.toolchain.c.symbols.discoveryProfile">
 						<buildOutputProvider>
@@ -1303,6 +1303,6 @@
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-		<project id="milestone3Demo.com.freescale.arm.cdt.toolchain.project.arm.1769412063" name="ARM Project" projectType="com.freescale.arm.cdt.toolchain.project.arm"/>
+		<project id="OptimusPrime.com.freescale.arm.cdt.toolchain.project.arm.1703467145" name="ARM Project" projectType="com.freescale.arm.cdt.toolchain.project.arm"/>
 	</storageModule>
 </cproject>

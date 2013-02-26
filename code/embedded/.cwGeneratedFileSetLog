@@ -1,7 +1,7 @@
 Sources/main.c
-Project_Settings/Linker_Files/PK40X256_ram.lcf
-Project_Settings/Linker_Files/PK40X256_flash.lcf
-Project_Settings/Debugger/PK40X256.mem
+Project_Settings/Linker_Files/MK40DX256Z_ram.lcf
+Project_Settings/Linker_Files/MK40DX256Z_flash.lcf
+Project_Settings/Debugger/MK40DX256Z.mem
 Project_Settings/Startup_Code/kinetis_sysinit.h
 Project_Settings/Startup_Code/kinetis_sysinit.c
 Project_Settings/Debugger/init_kinetis.tcl
