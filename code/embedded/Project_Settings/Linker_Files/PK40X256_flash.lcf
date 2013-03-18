@@ -2,7 +2,8 @@
 MEMORY {
 m_interrupts  (RX) : ORIGIN = 0x00000000, LENGTH = 0x000001E0
 m_text        (RX) : ORIGIN = 0x00000800, LENGTH = 0x00040000-0x00000800
-m_data        (RW) : ORIGIN = 0x1FFF8000, LENGTH = 0x00010000
+m_data        (RW) : ORIGIN = 0x1FFF8000, LENGTH = 0x00001000
+m_configs	  (RW) : ORIGIN = 0x1FFF9000, LENGTH = 0x00010000-0x00001000
 m_cfmprotrom  (RX) : ORIGIN = 0x00000400, LENGTH = 0x00000010
 }
 
@@ -70,6 +71,13 @@ _romp_at = ___ROM_AT + SIZEOF(.app_data);
     WRITEW(0);
     WRITEW(0);
 }
+
+.configs :
+{
+   # __config_table = .;
+    * (.configtable)
+   # . = ALIGN (0x4);
+} > m_configs
 
 __SP_INIT = . + 0x00004000;
 __heap_addr = __SP_INIT;

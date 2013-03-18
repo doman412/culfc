@@ -30,7 +30,12 @@ int main(void) {
 	
 
 	for (;;) {
-		PIDMode();
+		if (GetMode() == 2) {
+			// diagnostics mode function call
+		}
+		else {
+			PIDMode();
+		}
 	}
 
 	return 0;
