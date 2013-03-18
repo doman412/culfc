@@ -15,20 +15,19 @@ int error;
 OutputMap container;
 
 void PIDMode(void) {
-	Mode mode;
-	while (1) { // TODO fix this
+	Mode mode = GetMode();
+	while (mode == ACCURACY || mode == SPEED) {
 
 		if (moving) {
-			
-			error = GetCameraData();
-			PIDErrorControl(error, mode, &container);
-			
-			
+
 			if (GetButtonState() || FinishLineDetected()) {
 				ResetButtonState();
 				moving = 0;
 				continue;
 			}
+
+			error = GetCameraData();
+			PIDErrorControl(error, mode, &container);
 
 			updateM1(container.rightMotor);
 			updateM2(container.leftMotor);
@@ -40,7 +39,7 @@ void PIDMode(void) {
 				ResetButtonState();
 				continue;
 			}
-			
+
 			updateServo(0);
 			updateM1(MOTOR_BRAKE);
 			updateM2(MOTOR_BRAKE);

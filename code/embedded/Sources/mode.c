@@ -14,9 +14,9 @@ Mode GetMode(void) {
 	return mode;
 }
 
-// Cycle: accuracy, speed, bonus
+// Cycle: accuracy, speed, bonus, diagnostics
 void SetMode(Mode newMode) {
 	mode = newMode;
 	setLedData(1 << mode);
-	
+
 }

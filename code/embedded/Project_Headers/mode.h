@@ -11,7 +11,7 @@
 typedef enum {
 	ACCURACY,
 	SPEED,
-} Mode;
+	DIAGNOSTICS} Mode;
 
 
 Mode GetMode(void);

@@ -42,15 +42,15 @@ void initButton(void) {
 void portc_isr(void) {
 	Mode mode = GetMode();
 	if (PORTC_ISFR & (1 << 13)) {
-			toggleButtonState = 1;
+		toggleButtonState = 1;
 	}
 	else {
-		if (mode == ACCURACY) {
+		if (mode == ACCURACY)
 			SetMode(SPEED);
-		}
-		else {
+		else if (mode == SPEED)
+			SetMode(DIAGNOSTICS);
+		else
 			SetMode(ACCURACY);
-		}
 	}
 	
 	PORTC_ISFR = 0xFFFFFFFF; // clear port c Interrupt flag
