@@ -30,8 +30,8 @@ int main(void) {
 	
 
 	for (;;) {
-		if (GetMode() == 2) {
-			// diagnostics mode function call
+		 if (GetMode() == DIAGNOSTICS) {
+			DiagnosticsMode();
 		}
 		else {
 			PIDMode();
