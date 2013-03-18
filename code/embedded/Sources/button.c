@@ -11,8 +11,6 @@
 
 int toggleButtonState; // button state
 
-void enable_irq(int irq); // enables irq for NVIC table based on its K40 table value
-
 void initButton(void) {  
 
 	  //Set PTC5 (connected to SW3) for GPIO functionality, falling IRQ,
@@ -44,16 +42,11 @@ void initButton(void) {
 void portc_isr(void) {
 	Mode mode = GetMode();
 	if (PORTC_ISFR & (1 << 13)) {
-		if (mode != BONUS) {
 			toggleButtonState = 1;
-		}
 	}
 	else {
 		if (mode == ACCURACY) {
 			SetMode(SPEED);
-		}
-		else if (mode == SPEED) {
-			SetMode(BONUS);
 		}
 		else {
 			SetMode(ACCURACY);
@@ -70,32 +63,4 @@ void ResetButtonState(void) {
 
 int GetButtonState(void) {
 	return toggleButtonState; // returns state of toggled button
-}
-
-void enable_irq(int irq) {
-	int div;
-
-	/* Make sure that the IRQ is an allowable number. Right now up to 91 is 
-	 * used.
-	 */
-	if (irq > 91)
-		printf("\nERR! Invalid IRQ value passed to enable irq function!\n");
-
-	/* Determine which of the NVICISERs corresponds to the irq */
-	div = irq / 32;
-
-	switch (div) {
-	case 0x0:
-		NVICICPR0 |= 1 << (irq % 32);
-		NVICISER0 |= 1 << (irq % 32);
-		break;
-	case 0x1:
-		NVICICPR1 |= 1 << (irq % 32);
-		NVICISER1 |= 1 << (irq % 32);
-		break;
-	case 0x2:
-		NVICICPR2 |= 1 << (irq % 32);
-		NVICISER2 |= 1 << (irq % 32);
-		break;
-	}
 }
