@@ -13,6 +13,7 @@ typedef enum {
 	SPEED,
 } Mode;
 
+
 Mode GetMode(void);
 void SetMode(Mode newMode);
 
