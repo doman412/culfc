@@ -16,7 +16,7 @@ OutputMap container;
 
 void PIDMode(void) {
 	Mode mode;
-	while ((mode = GetMode()) != BONUS) {
+	while (1) { // TODO fix this
 
 		if (moving) {
 			

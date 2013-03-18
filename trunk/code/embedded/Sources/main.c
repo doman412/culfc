@@ -19,7 +19,7 @@ int main(void) {
 
 	SetupPorts();
 	
-	SetMode(BONUS);
+	SetMode(ACCURACY);
 	
 	InitializeCamera();
 	initButton();
@@ -30,12 +30,7 @@ int main(void) {
 	
 
 	for (;;) {
-		if (GetMode() == BONUS) {
-			BonusMode();
-		}
-		else {
-			PIDMode();
-		}
+		PIDMode();
 	}
 
 	return 0;
