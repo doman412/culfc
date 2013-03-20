@@ -12,9 +12,12 @@
 #include "button.h"
 #include "mode.h"
 #include "pidmode.h"
+#include "util.h"
 
 int main(void) {
 
+	int i;
+	
 	InitClock();
 
 	SetupPorts();
@@ -26,6 +29,13 @@ int main(void) {
 
 	InitFlexTimer0();
 	InitFlexTimer1();
+	
+	updateServo(4.0);
+	
+	blocking_delay(10000000);
+	updateServo(-4.0);
+	blocking_delay(10000000);
+	updateServo(0.0);
 	
 	
 

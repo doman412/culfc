@@ -15,8 +15,8 @@ int error;
 OutputMap container;
 
 void PIDMode(void) {
-	Mode mode = GetMode();
-	while (mode == ACCURACY || mode == SPEED) {
+	Mode mode;
+	while ((mode = GetMode()) == ACCURACY || mode == SPEED) {
 
 		if (moving) {
 

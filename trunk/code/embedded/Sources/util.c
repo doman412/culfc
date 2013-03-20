@@ -76,3 +76,9 @@ void enable_irq (int irq)
               break;
     }              
 }
+
+void blocking_delay(int time_approximation) {
+	int i;
+	for (i = 0; i < time_approximation; i++) ;
+	return;
+}

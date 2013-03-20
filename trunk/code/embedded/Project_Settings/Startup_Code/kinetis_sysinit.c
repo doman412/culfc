@@ -10,6 +10,7 @@
 #include "adc.h"
 #include "button.h"
 #include "uart.h"
+#include "BT.h"
 
 typedef void (*const tIsrFunc)(void);
 typedef struct {
@@ -126,7 +127,7 @@ static __declspec(vectortable) tVectorTable __vect_table = { /* Interrupt vector
    (tIsrFunc)UNASSIGNED_ISR,                               /* 58 (0x000000E8) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 59 (0x000000EC) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 60 (0x000000F0) (prior: -) */
-   (tIsrFunc)Uart0Isr,                             		   /* 61 (0x000000F4) (prior: -) */
+   (tIsrFunc)BT_REC,                             		   /* 61 (0x000000F4) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 62 (0x000000F8) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 63 (0x000000FC) (prior: -) */
    (tIsrFunc)UNASSIGNED_ISR,                               /* 64 (0x00000100) (prior: -) */
