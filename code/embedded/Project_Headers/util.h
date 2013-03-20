@@ -17,5 +17,5 @@ int findChar(char, char[]);
 int strLen(char []);
 int parseInt(char str[]);
 void enable_irq(int);
-
+void blocking_delay(int time_approximation);
 #endif /* UTIL_H_ */

@@ -65,6 +65,13 @@ void PIDErrorControl(int error, Mode mode, OutputMap* outputMap) {
 	previousError1 = error;
 	previousServoOutput = currentServoOutput;
 
+	// Clamp the servo value
+	
+	if (currentServoOutput < -4.5)
+		currentServoOutput = -4.5;
+	else if (currentServoOutput > 4.5)
+		currentServoOutput = 4.5;
+	
 	// Write outputs
 	outputMap->servo = currentServoOutput;
 	outputMap->leftMotor = currentLeftOutput;
