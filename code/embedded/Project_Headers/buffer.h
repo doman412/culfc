@@ -25,10 +25,10 @@ int BufferFull() ;
 int BufferEmpty() ;
  
 /* Write an element, overwriting oldest element if buffer is full. App can
-   choose to avoid the overwrite by checking cbIsFull(). */
+   choose to avoid the overwrite by checking BufferFull(). */
 void BufferWrite(int data) ;
  
-/* Read oldest element. App must ensure !cbIsEmpty() first. */
+/* Read oldest element. App must ensure !BufferEmpty() first. */
 int BufferRead() ;
 
 
