@@ -11,6 +11,8 @@
 char commandBuf[50];
 volatile int buffCount;
 unsigned int readyToDecode = 0;
+
+// This looks like a buffer of command buffers, but it's never used.
 char* decodeBuf[5] = {commandBuf,0,0,0,0};
 
 //void (*fo)(char);
