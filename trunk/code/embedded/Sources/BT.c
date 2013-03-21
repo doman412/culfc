@@ -189,7 +189,7 @@ void decode(char cmd[]){
 		//
 		// The executed command takes an integer, parsed from the data buffer.
 		if(command[0]>96 && command[0]<123)
-			(*commandList[command[0]-97])(parseInt(data));
+			(*commandList[command[0]-97])((float)atof(data));
 	}
 //	sendStr("\r\n");
 }

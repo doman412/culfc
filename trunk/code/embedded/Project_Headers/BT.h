@@ -5,6 +5,7 @@
  *      Author: Derek Arner
  */
 #include <stdio.h>
+#include <stdlib.h>
 #include "util.h"
 #include "derivative.h"
 

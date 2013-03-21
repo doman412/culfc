@@ -9,7 +9,7 @@
 
 Command commandList[26];
 
-void default_cmd(int a){
+void default_cmd(float a){
 	// defualt command function
 }
 

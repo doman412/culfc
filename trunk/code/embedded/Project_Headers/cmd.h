@@ -11,7 +11,7 @@
 
 
 
-typedef void (*Command) (int a);
+typedef void (*Command) (float a);
 
 void initCommands(void);
 extern void cmdB(int);
