@@ -7,6 +7,7 @@
 
 #include "BT.h"
 #include "cmd.h"
+#include "buffer.h"
 
 char commandBuf[50];
 volatile int buffCount;
@@ -86,32 +87,36 @@ void echoBT(void){
  * 			1 == interrupt method (*add 'decodeBT()' to loop, 'BT_REC' to vector table:61)
  */
 void initBT(int mode){
-	SIM_SCGC4 |= SIM_SCGC4_UART0_MASK;
-	SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK;
-	
-	buffCount = 0;
+	InitBuffer();
+	// First, turn on power to the module
+			SIM_SCGC4 |= SIM_SCGC4_UART0_MASK;
+			
+			// Tell the RX line its function
+			PORTA_PCR15 |= PORT_PCR_MUX(3) | PORT_PCR_DSE_MASK;
+			// Tell the TX line its function
+			PORTA_PCR14 |= PORT_PCR_MUX(3) | PORT_PCR_DSE_MASK;
 
-	initCommands();
-	
-	PORTA_PCR15 = PORT_PCR_MUX(3) | PORT_PCR_DSE_MASK; // RX, A24
-	PORTA_PCR14 = PORT_PCR_MUX(3) | PORT_PCR_DSE_MASK; // TX, A22
-	
-	UART0_BDH = 0;
-	UART0_BDL = 52;
-	UART0_C4 |= UART_C4_BRFA(0); 
-	
-	if(mode==1){
-		enable_irq(45);
-		NVICIP11 |= 2;
-		UART0_C2 |= UART_C2_RIE_MASK; // enable interrupt for receiver
-	}
-	
-	UART0_RWFIFO = 1;
-	UART0_PFIFO |= (UART_PFIFO_RXFE_MASK | UART_PFIFO_TXFE_MASK);
-	
-	
-	UART0_C1 |= 0;
-	UART0_C2 |= (UART_C2_TE_MASK | UART_C2_RE_MASK);
+			// Ensure UART is off before changing settings
+			UART0_C2 &= ~(UART_C2_RE_MASK | UART_C2_TE_MASK);
+
+			// Set baud rate
+			// (96,000,000 Hz / 9600 Hz) / 16 = 625, or 0x271
+			// BDH[4:0] = 0x2
+			// BDL = 0x71
+			UART0_BDH |= 0x2;
+			UART0_BDL = 0x71;
+
+			// Set FIFO watermark to 1
+			UART0_RWFIFO |= UART_RWFIFO_RXWATER(1);
+			UART0_PFIFO |= UART_PFIFO_RXFE_MASK | UART_PFIFO_TXFE_MASK;
+			
+			// Enable receiver interrupt (45)
+			NVICIP11 = 0x40;
+			NVICICPR1 |= (1 << 13);
+			NVICISER1 |= (1 << 13);
+			
+			// Turn on receiver, and receiver interrupt enable
+			UART0_C2 |= (UART_C2_RE_MASK | UART_C2_RIE_MASK | UART_C2_TE_MASK);
 	
 	
 }
@@ -122,6 +127,7 @@ void BT_REC(void){
 	char ch;
 	UART0_S1 &= ~(UART_S1_RDRF_MASK);
 	ch = UART0_D;
+	BufferWrite(ch);
 	
 	if(ch==13){ // enter was pressed.
 		commandBuf[buffCount] = NULL;

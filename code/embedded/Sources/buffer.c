@@ -25,7 +25,7 @@ int BufferEmpty() {
  
 /* Write an element, overwriting oldest element if buffer is full. App can
    choose to avoid the overwrite by checking cbIsFull(). */
-void BufferWrite(int data) {
+void BufferWrite(char data) {
     cb.elems[cb.end] = data;
     cb.end = (cb.end + 1) % CB_SIZE;
     if (cb.end == cb.start) {
@@ -34,8 +34,8 @@ void BufferWrite(int data) {
 }
  
 /* Read oldest element. App must ensure !cbIsEmpty() first. */
-int BufferRead() {
-    int data = cb.elems[cb.start];
+char BufferRead() {
+    char data = cb.elems[cb.start];
     cb.start = (cb.start + 1) % CB_SIZE;
     return data;
 }

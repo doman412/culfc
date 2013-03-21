@@ -15,7 +15,7 @@
 typedef struct {
     int         start;  /* index of oldest element              */
     int         end;    /* index at which to write new element  */
-    int        elems[10];  /* vector of elements                   */
+    char        elems[10];  /* vector of elements                   */
 } CircularBuffer;
  
 void InitBuffer(void);
@@ -26,10 +26,10 @@ int BufferEmpty() ;
  
 /* Write an element, overwriting oldest element if buffer is full. App can
    choose to avoid the overwrite by checking BufferFull(). */
-void BufferWrite(int data) ;
+void BufferWrite(char data) ;
  
 /* Read oldest element. App must ensure !BufferEmpty() first. */
-int BufferRead() ;
+char BufferRead() ;
 
 
 #endif /* BUFFER_H_ */

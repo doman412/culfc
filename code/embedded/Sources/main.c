@@ -13,6 +13,7 @@
 #include "mode.h"
 #include "pidmode.h"
 #include "util.h"
+#include "BT.h"
 
 int main(void) {
 
@@ -29,6 +30,7 @@ int main(void) {
 
 	InitFlexTimer0();
 	InitFlexTimer1();
+	initBT(1);
 	
 	updateServo(4.0);
 	
