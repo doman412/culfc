@@ -10,6 +10,7 @@
 #include "FlexTimer.h"
 #include "FlexTimer1.h"
 #include "BT.h"
+#include "buffer.h"
 
 int m1Percent;
 int m2Percent;
@@ -21,13 +22,14 @@ void DiagnosticsMode(void) {
 	m2Percent = 0;
 	servo = 0.0;
 	
-	initBT(1);
+	
 	
 	while (GetMode() == DIAGNOSTICS) {
 		updateM1(m1Percent);
 		updateM2(m2Percent);
 		updateServo(servo);
-		echoBT();
+		if (!BufferEmpty())
+			sendChar(BufferRead());
 	}
 	
 	updateM1(0);
