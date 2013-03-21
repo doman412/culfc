@@ -18,8 +18,8 @@ float servo;
 
 void DiagnosticsMode(void) {
 	
-	m1Percent = 0;
-	m2Percent = 0;
+	m1Percent = 30;
+	m2Percent = 30;
 	servo = 0.0;
 	
 	
