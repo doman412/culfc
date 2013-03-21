@@ -146,24 +146,48 @@ void decodeBT(){
  * decodes the command that was sent, then executes the command
  */
 void decode(char cmd[]){
+	// Defines the delimiter between command and data
 	char delim = ' ';
-	int loc = findChar(delim, cmd);
-	int len = strLen(cmd);
-	int i;
-	char command[25];
 	
+	// Determine the index of the delimeter in the string.
+	// This will be used to split the string into command and data
+	int loc = findChar(delim, cmd);
+	
+	// Determine the overall length of the string.
+	int len = strLen(cmd);
+	
+	int i;
+	
+	// Allocate two character buffers, one for the command and one for data
+	char command[25];
 	char data[25];
 	
+	// Only if we have a valid message (both command and data)
 	if(loc>0){
+		
+		// Copy the first part of the argument into the command buffer
 		for(i=0; i<loc; i++){
 			command[i] = cmd[i];
 		}
+		// null-terminate the command buffer (proper ASCII string)
 		command[loc] = 0;
+		
+		// Copy the second part of the string into the message buffer.
+		// TODO: is this null-terminated?
 		for(i=0; i<(len-loc); i++){
 			data[i] = cmd[i+loc+1];
 		}
 //		printf("parsed int: %d",parseInt(post));
 //		exe(command[0], parseInt(data));
+		
+		// Is the first character of the command a lower-case alphabetic character?
+		// If so, find the command by transforming the character into an index:
+		// a => 0,
+		// b => 1,
+		// ...
+		// z => 25
+		//
+		// The executed command takes an integer, parsed from the data buffer.
 		if(command[0]>96 && command[0]<123)
 			(*commandList[command[0]-97])(parseInt(data));
 	}
