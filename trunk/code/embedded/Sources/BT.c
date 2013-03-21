@@ -175,10 +175,10 @@ void decode(char cmd[]){
 		command[loc] = 0;
 		
 		// Copy the second part of the string into the message buffer.
-		// TODO: this is not null terminated
 		for(i=0; i<(len-loc); i++){
 			data[i] = cmd[i+loc+1];
 		}
+		data[i+1] = NULL;
 //		printf("parsed int: %d",parseInt(post));
 //		exe(command[0], parseInt(data));
 		
