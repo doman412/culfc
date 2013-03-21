@@ -54,15 +54,6 @@
 							<tool id="com.freescale.arm.cdt.toolchain.disassembler.392397076" name="ARM Disassembler" superClass="com.freescale.arm.cdt.toolchain.disassembler"/>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="com.freescale.arm.cdt.toolchain.config.arm.release.385927877.Project_Settings/Linker_Files/PK40X256_ram.lcf" name="PK40X256_ram.lcf" rcbsApplicability="disable" resourcePath="Project_Settings/Linker_Files/PK40X256_ram.lcf" toolsToInvoke="com.freescale.arm.cdt.toolchain.linker.1904693826.1249598230">
-						<tool id="com.freescale.arm.cdt.toolchain.linker.1904693826.1249598230" name="ARM Linker" superClass="com.freescale.arm.cdt.toolchain.linker.1904693826">
-							<inputType id="com.freescale.arm.cdt.toolchain.linker.input.1451013017" name="ARM Linker Input" superClass="com.freescale.arm.cdt.toolchain.linker.input">
-								<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
-								<additionalInput kind="additionalinput" paths="$(LIBS)"/>
-								<additionalInput kind="additionaldependency" paths="$(LCF_SRCS)"/>
-							</inputType>
-						</tool>
-					</fileInfo>
 					<sourceEntries>
 						<entry excluding="Project_Settings/Linker_Files/PK40X256_ram.lcf" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
