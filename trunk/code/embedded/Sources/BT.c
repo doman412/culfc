@@ -103,9 +103,12 @@ void initBT(int mode){
 			// (96,000,000 Hz / 9600 Hz) / 16 = 625, or 0x271
 			// BDH[4:0] = 0x2
 			// BDL = 0x71
-			UART0_BDH |= 0x2;
-			UART0_BDL = 0x71;
-
+//			UART0_BDH |= 0x2;
+//			UART0_BDL = 0x71;
+			UART0_BDH = 0;
+			UART0_BDL = 52;
+			UART0_C4 |= UART_C4_BRFA(0); 
+				
 			// Set FIFO watermark to 1
 			UART0_RWFIFO |= UART_RWFIFO_RXWATER(1);
 			UART0_PFIFO |= UART_PFIFO_RXFE_MASK | UART_PFIFO_TXFE_MASK;
