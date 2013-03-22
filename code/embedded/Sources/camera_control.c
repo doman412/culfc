@@ -90,7 +90,7 @@ void ConfigureAndStartPIT(void) {
 	// Turn on power to PIT
 	SIM_SCGC6 |= SIM_SCGC6_PIT_MASK;
 	PIT_MCR = 0x01; // Turn on the PIT
-	PIT_LDVAL0 = 479999;
+	PIT_LDVAL0 = 239999;
 	PIT_TCTRL0 = PIT_TCTRL_TIE_MASK; // Enable interrupts
 	PIT_TCTRL0 |= PIT_TCTRL_TEN_MASK; // Turn on the timer
 }
