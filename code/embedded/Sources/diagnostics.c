@@ -25,8 +25,8 @@ void DiagnosticsMode(void) {
 	
 	
 	while (GetMode() == DIAGNOSTICS) {
-		updateM1(m1Percent);
-		updateM2(m2Percent);
+		//updateM1(m1Percent);
+		//updateM2(m2Percent);
 		updateServo(servo);
 		if (!BufferEmpty())
 			sendChar(BufferRead());
