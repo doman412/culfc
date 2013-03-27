@@ -11,6 +11,8 @@
 #include "FlexTimer1.h"
 #include "BT.h"
 #include "buffer.h"
+#include "parameter.h"
+#include "stdio.h"
 
 int m1Percent;
 int m2Percent;
@@ -22,6 +24,18 @@ void DiagnosticsMode(void) {
 	m2Percent = 30;
 	servo = 0.0;
 	
+	//change_parameter("kp", 1.0);
+	//change_parameter("ki", 2.0);
+	//change_parameter("kd", 3.0);
+	
+	float f;
+	read_parameter("kp", &f);
+	printf("kp is %d\n", f);
+	read_parameter("ki", &f);
+	printf("ki is %d\n", f);
+	read_parameter("kd", &f);
+	printf("kd is %d\n", f);
+	
 	
 	
 	while (GetMode() == DIAGNOSTICS) {
@@ -31,6 +45,8 @@ void DiagnosticsMode(void) {
 		if (!BufferEmpty())
 			sendChar(BufferRead());
 	}
+	
+	
 	
 	updateM1(0);
 	updateM2(0);

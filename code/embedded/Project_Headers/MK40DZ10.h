@@ -237,6 +237,7 @@ typedef enum {
 */
 
 #if defined(__CWCC__)
+  #pragma c99 on
   #pragma push
   #pragma cpp_extensions on
 #elif defined(__GNUC__)

@@ -14,6 +14,7 @@
 #include "pidmode.h"
 #include "util.h"
 #include "BT.h"
+#include "parameter.h"
 
 int main(void) {
 
@@ -31,6 +32,7 @@ int main(void) {
 	InitFlexTimer0();
 	InitFlexTimer1();
 	initBT(1);
+	update_table();
 	
 	updateServo(4.0);
 	
@@ -43,7 +45,9 @@ int main(void) {
 
 	for (;;) {
 		 if (GetMode() == DIAGNOSTICS) {
+			 
 			DiagnosticsMode();
+			
 		}
 		else {
 			PIDMode();
