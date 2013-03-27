@@ -27,7 +27,7 @@
 					<folderInfo id="com.freescale.arm.cdt.toolchain.config.arm.release.385927877." name="/" resourcePath="">
 						<toolChain id="com.freescale.arm.cdt.toolchain.arm.release.993297231" name="ARM Toolchain" superClass="com.freescale.arm.cdt.toolchain.arm.release">
 							<targetPlatform id="com.freescale.arm.cdt.toolchain.targetplatform.1865273795" isAbstract="false" name="ARM Target Platform" superClass="com.freescale.arm.cdt.toolchain.targetplatform"/>
-							<builder buildPath="${ProjDirPath}/PK40X256_INTERNAL_FLASH" id="com.freescale.arm.cdt.toolchain.builder.516170775" keepEnvironmentInBuildfile="false" name="GNU Make Builder" parallelBuildWorkspaceOn="true" superClass="com.freescale.arm.cdt.toolchain.builder"/>
+							<builder autoBuildTarget="" buildPath="${ProjDirPath}/PK40X256_INTERNAL_FLASH" cleanBuildTarget="" enableAutoBuild="false" enableCleanBuild="true" enabledIncrementalBuild="true" id="com.freescale.arm.cdt.toolchain.builder.516170775" incrementalBuildTarget="" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="GNU Make Builder" parallelBuildWorkspaceOn="true" parallelizationNumber="-1" superClass="com.freescale.arm.cdt.toolchain.builder"/>
 							<tool id="com.freescale.arm.cdt.toolchain.linker.1904693826" name="ARM Linker" superClass="com.freescale.arm.cdt.toolchain.linker">
 								<option id="com.freescale.arm.cdt.toolchain.linker.libraries.libSearch.707789857" name="Library Search Paths" superClass="com.freescale.arm.cdt.toolchain.linker.libraries.libSearch" valueType="stringList">
 									<listOptionValue builtIn="false" value="&quot;${MCUToolsBaseDir}/ARM_EABI_Support/ewl/lib&quot;"/>
@@ -39,12 +39,18 @@
 									<additionalInput kind="additionaldependency" paths="$(LCF_SRCS)"/>
 								</inputType>
 							</tool>
-							<tool id="com.freescale.arm.cdt.toolchain.compiler.350957258" name="ARM Compiler" superClass="com.freescale.arm.cdt.toolchain.compiler">
+							<tool command="&quot;${ARM_ToolsDir}/mwccarm&quot; -gccinc" id="com.freescale.arm.cdt.toolchain.compiler.350957258" name="ARM Compiler" superClass="com.freescale.arm.cdt.toolchain.compiler">
 								<option id="com.freescale.arm.cdt.toolchain.armCpp.input.userIncludes.472674580" name="Include User Search Paths (-i)" superClass="com.freescale.arm.cdt.toolchain.armCpp.input.userIncludes" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Project_Headers&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${MCUToolsBaseDir}/ARM_EABI_Support/ewl/EWL_C/include&quot;"/>
 								</option>
 								<option id="com.freescale.arm.cdt.toolchain.armCpp.language.cpp.exceptions.1964022934" name="Enable Exceptions" superClass="com.freescale.arm.cdt.toolchain.armCpp.language.cpp.exceptions" value="false" valueType="boolean"/>
+								<option id="com.freescale.arm.cdt.toolchain.armCpp.optimization.mode.2047201883" name="Speed vs. Size" superClass="com.freescale.arm.cdt.toolchain.armCpp.optimization.mode" value="com.freescale.arm.cdt.toolchain.armCpp.optimization.mode.space" valueType="enumerated"/>
+								<option id="com.freescale.arm.cdt.toolchain.armCpp.input.define.1391163620" name="Defined Macros" superClass="com.freescale.arm.cdt.toolchain.armCpp.input.define" valueType="definedSymbols"/>
+								<option id="com.freescale.arm.cdt.toolchain.armCpp.language.cpp.c99.1549546916" name="Enable C99 Extensions" superClass="com.freescale.arm.cdt.toolchain.armCpp.language.cpp.c99" value="false" valueType="boolean"/>
+								<option id="com.freescale.arm.cdt.toolchain.armCpp.language.cpp.gcc.2146122572" name="Enable GCC Extensions" superClass="com.freescale.arm.cdt.toolchain.armCpp.language.cpp.gcc" value="false" valueType="boolean"/>
+								<option id="com.freescale.arm.cdt.toolchain.armCpp.warn.warningsFlag.hidden.adjusted.158637294.adjusted.263727810" name="(hidden) warnings flag" superClass="com.freescale.arm.cdt.toolchain.armCpp.warn.warningsFlag.hidden.adjusted.158637294" value="false" valueType="boolean"/>
+								<option id="com.freescale.arm.cdt.toolchain.armCpp.warn.enableWarnings.hidden.adjusted.348988387.adjusted.1176662632" name="(hidden) toggle warnings flag" superClass="com.freescale.arm.cdt.toolchain.armCpp.warn.enableWarnings.hidden.adjusted.348988387" value="com.freescale.arm.cdt.toolchain.enableWarnings.custom.hidden" valueType="enumerated"/>
 								<inputType id="com.freescale.arm.cdt.toolchain.armCpp.cSource.82368441" name="ARM C/C++ Compiler" superClass="com.freescale.arm.cdt.toolchain.armCpp.cSource"/>
 							</tool>
 							<tool id="com.freescale.arm.cdt.toolchain.assembler.383976760" name="ARM Assembler" superClass="com.freescale.arm.cdt.toolchain.assembler">
@@ -59,6 +65,10 @@
 					</sourceEntries>
 				</configuration>
 			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.pathentry"/>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
+			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 			<storageModule moduleId="scannerConfiguration">
 				<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 				<profile id="com.freescale.arm.cdt.toolchain.c.symbols.discoveryProfile">
@@ -448,7 +458,7 @@
 					<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.freescale.arm.cdt.toolchain.c.symbols.discoveryProfile"/>
 					<profile id="com.freescale.arm.cdt.toolchain.c.symbols.discoveryProfile">
 						<buildOutputProvider>
-							<openAction enabled="false" filePath=""/>
+							<openAction enabled="true" filePath=""/>
 							<parser enabled="false"/>
 						</buildOutputProvider>
 						<scannerInfoProvider id="specsFile">
@@ -638,10 +648,6 @@
 					</profile>
 				</scannerConfigBuildInfo>
 			</storageModule>
-			<storageModule moduleId="org.eclipse.cdt.core.pathentry"/>
-			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
-			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
-			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">

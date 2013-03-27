@@ -74,7 +74,8 @@ _romp_at = ___ROM_AT + SIZEOF(.app_data);
 
 .configs :
 {
-   # __config_table = .;
+	. = ALIGN (0x8);
+   # __configtable = .;
     * (.configtable)
    # . = ALIGN (0x4);
 } > m_configs
