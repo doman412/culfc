@@ -1,24 +1,27 @@
-/*
- * cmd.h
- *
- *  Created on: Oct 31, 2012
- *      Author: ulab
- */
-#include "BT.h"
+#ifndef CMD_H
+#define CMD_H
 
-#ifndef CMD_H_
-#define CMD_H_
+typedef enum ArgumentType {
+	FLOAT,
+	INT,
+	STRING
+} ArgumentType;
 
+typedef char* (*Command) (char** argv, unsigned int argc);
 
+typedef struct CommandProperties {
+	char* name;
+//	ArgumentType* arg_types;
+//	int num_args;
+	Command cmd_ptr;
+} CommandProperties;
 
-typedef void (*Command) (float a);
+#define NUM_CMDS 2
+extern const CommandProperties command_list[NUM_CMDS];
 
-void initCommands(void);
-extern void cmdB(int);
-extern void btDebug(int);
-extern void varSwitch(int);
-extern void opGo(int);
-extern Command commandList[];
-extern void setCamProperty(int);
+Command find_command(char* cmd_name);
 
-#endif /* CMD_H_ */
+char* set_parameter_command(char** argv, unsigned int argc);
+char* set_servo_command(char** argv, unsigned int argc);
+
+#endif 

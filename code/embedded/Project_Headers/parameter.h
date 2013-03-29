@@ -8,7 +8,7 @@
 #define PARAMETER_H_
 
 #include <derivative.h>
-#include <string.h>
+#include "cmd.h"
 
 #pragma define_section configtable ".configtable" ".configtable" ".configtable" far_abs RW
 

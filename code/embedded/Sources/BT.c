@@ -7,11 +7,13 @@
 
 #include "BT.h"
 #include "cmd.h"
-#include "buffer.h"
+#include "queue.h"
+#include "null.h"
 
-char commandBuf[50];
+char sentence[MAX_QUEUE_SIZE];
 volatile int buffCount;
 unsigned int readyToDecode = 0;
+static Queue queue;
 
 // This looks like a buffer of command buffers, but it's never used.
 //char* decodeBuf[5] = {commandBuf,0,0,0,0};
@@ -86,8 +88,11 @@ void echoBT(void){
  * 			0 == polling method (*add 'pollBT()' to loop)
  * 			1 == interrupt method (*add 'decodeBT()' to loop, 'BT_REC' to vector table:61)
  */
+
+
 void initBT(int mode){
-	InitBuffer();
+	
+	init_queue(&queue);
 	// First, turn on power to the module
 			SIM_SCGC4 |= SIM_SCGC4_UART0_MASK;
 			
@@ -130,15 +135,18 @@ void BT_REC(void){
 	char ch;
 	UART0_S1 &= ~(UART_S1_RDRF_MASK);
 	ch = UART0_D;
-	BufferWrite(ch);
+	
+	sendChar(ch);
+	
+	if(ch==10){ // backspace was pressed.
+		pop_front(&queue);
+	}
+	else{
+		push_front(&queue, ch);
+	}
 	
 	if(ch==13){ // enter was pressed.
-		commandBuf[buffCount] = NULL;
-		buffCount = 0;
-		readyToDecode = 1;
-	} else {
-		commandBuf[buffCount++] = ch;
-//		sendChar(ch);
+		readyToDecode = readyToDecode++;
 	}
 	
 }
@@ -148,82 +156,66 @@ void BT_REC(void){
  * outside the ISR
  */
 void decodeBT(){
-	if(readyToDecode){
-		decode(commandBuf);
+	if(readyToDecode) {
+		unsigned int i = 0;
+		while (1) {
+			if (queue_empty(&queue)) {
+				break;
+			}
+			char c = pop_back(&queue);
+			if (c == '\n') {
+				sentence[i] = '\0';
+				break;
+			}
+			else {
+				sentence[i++] = c;
+			}
+		}
+		decode(sentence);
 	}
-	readyToDecode = 0;
+	readyToDecode--;
 }
 /*
  * decodes the command that was sent, then executes the command
  */
-void decode(char cmd[]){
-	// Defines the delimiter between command and data
-	char delim = ' ';
-	
-	// Determine the index of the delimeter in the string.
-	// This will be used to split the string into command and data
-	int loc = findChar(delim, cmd);
-	
-	// Determine the overall length of the string.
-	int len = strLen(cmd);
-	
-	int i;
-	
-	// Allocate two character buffers, one for the command and one for data
-	char command[25];
-	char data[25];
-	
-	// Only if we have a valid message (both command and data)
-	if(loc>0){
-		
-		// Copy the first part of the argument into the command buffer
-		for(i=0; i<loc; i++){
-			command[i] = cmd[i];
-		}
-		// null-terminate the command buffer (proper ASCII string)
-		command[loc] = 0;
-		
-		// Copy the second part of the string into the message buffer.
-		for(i=0; i<(len-loc); i++){
-			data[i] = cmd[i+loc+1];
-		}
-		data[i+1] = NULL;
-//		printf("parsed int: %d",parseInt(post));
-//		exe(command[0], parseInt(data));
-		
-		// Is the first character of the command a lower-case alphabetic character?
-		// If so, find the command by transforming the character into an index:
-		// a => 0,
-		// b => 1,
-		// ...
-		// z => 25
-		//
-		// The executed command takes an integer, parsed from the data buffer.
-		if(command[0]>96 && command[0]<123)
-			(*commandList[command[0]-97])((float)atof(data));
+void decode(char* sentence){
+	char* argument;
+	char* command = (char*)strtok(sentence, " ");
+	argument = (char*)strtok(NULL, " ");
+	char* argv[2];
+	unsigned int argc = 0;
+	// While we have more words
+	while (argument != NULL && argc < 2) {
+		argv[argc] = argument;
+		argc++;
+		// Get the next word
+		argument = (char*)strtok(NULL, " ");
 	}
-//	sendStr("\r\n");
+	
+	Command cmd = find_command(command);
+	char* message = cmd(argv, argc);
+	
 }
 /*
  * poll BT UART instead of interrupt based;
  */
 void pollBT(void){
-	char ch;
-	if(gotChar()){
-		ch = UART0_D;
-		
-		if(ch==13){ // enter was pressed.
-			commandBuf[buffCount] = NULL;
-			buffCount = 0;
-//			readyToDecode = 1;
-			decode(commandBuf);
-		} else {
-			commandBuf[buffCount++] = ch;
-//			sendChar(ch);
-		}
-		
-		
-	}
+//	char ch;
+//	if(gotChar()){
+//		ch = UART0_D;
+//		
+//		if(ch==13){ // enter was pressed.
+//			commandBuf[buffCount] = NULL;
+//			buffCount = 0;
+////			readyToDecode = 1;
+//			decode(commandBuf);
+//		} else {
+//			commandBuf[buffCount++] = ch;
+////			sendChar(ch);
+//		}
+//		
+//		
+//	}
 }
 
 
