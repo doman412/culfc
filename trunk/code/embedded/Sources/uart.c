@@ -7,7 +7,7 @@
 
 #include "uart.h"
 #include "derivative.h"
-#include "buffer.h"
+#include "queue.h"
 
 int data;
 
