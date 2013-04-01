@@ -15,6 +15,7 @@ extern const CommandProperties command_list[NUM_CMDS];
 Command find_command(char* cmd_name);
 
 char* set_parameter_command(char** argv, unsigned int argc);
+char* get_parameter_command(char** argv, unsigned int argc);
 char* set_servo_command(char** argv, unsigned int argc);
 
 #endif 

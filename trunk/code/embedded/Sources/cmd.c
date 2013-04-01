@@ -51,7 +51,7 @@ char* set_parameter_command(char** argv, unsigned int argc) {
 	}
 }
 
-char* set_parameter_command(char** argv, unsigned int argc) {
+char* get_parameter_command(char** argv, unsigned int argc) {
 	if (argc != 1) {
 		return "Syntax: set <variable> <value>";
 	}
