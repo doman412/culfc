@@ -1,5 +1,5 @@
 /*
- * UART.h
+ * BT.h
  *
  *  Created on: Oct 15, 2012
  *      Author: Derek Arner
@@ -9,22 +9,20 @@
 #include "util.h"
 #include "derivative.h"
 
-#ifndef UART_H_
-#define UART_H_
+#ifndef BT_H_
+#define BT_H_
 
 
 void initBT(int);
 int gotChar(void);
 char getChar(void);
 void sendChar(char ch);
-void diag(char[], int);
 void sendStr(char[]);
 void echoBT(void);
 
-void BT_REC(void);
+void bt_isr(void);
 
-void pollBT(void);
-
+void decodeBT(void);
 void decode(char[]);
 
-#endif /* UART_H_ */
+#endif /* BT_H_ */
