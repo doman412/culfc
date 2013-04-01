@@ -23,10 +23,10 @@ float servo;
 
 void DiagnosticsMode(void) {
 	
-	m1Percent = 30;
-	m2Percent = 30;
-	servo = 0.0;
-	
+//	m1Percent = 30;
+//	m2Percent = 30;
+//	servo = 0.0;
+//	
 //	init_queue(&queue);
 //	push_front(&queue, 'a');
 //	push_front(&queue, 'b');
@@ -52,17 +52,17 @@ void DiagnosticsMode(void) {
 	
 	
 	
-	//change_parameter("kp", 1.0);
-	//change_parameter("ki", 2.0);
-	//change_parameter("kd", 3.0);
-	
+//	change_parameter("kp", 1.0);
+//	change_parameter("ki", 2.0);
+//	change_parameter("kd", 3.0);
+//	
 //	float f;
 //	read_parameter("kp", &f);
 //	read_parameter("ki", &f);
 //	read_parameter("kd", &f);
-	
-	
-	
+//	
+//	
+//	
 //	while (GetMode() == DIAGNOSTICS) {
 //		//updateM1(m1Percent);
 //		//updateM2(m2Percent);
@@ -70,11 +70,11 @@ void DiagnosticsMode(void) {
 //		if (!queue_empty(&queue))
 //			sendChar(pop_back(&queue));
 //	}
-	
-	
-	
-	updateM1(0);
-	updateM2(0);
-	updateServo(0.0);
+//	
+//	
+//	
+//	updateM1(0);
+//	updateM2(0);
+//	updateServo(0.0);
 	
 }

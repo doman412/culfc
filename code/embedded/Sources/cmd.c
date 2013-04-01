@@ -13,15 +13,14 @@
 const CommandProperties command_list[] = {
 		{
 			.name = "set",
-//			.num_args = 2,
-//			.arg_types = (ArgumentType[]) {STRING, FLOAT},
 			.cmd_ptr = &set_parameter_command
 		},
-		
+		{
+			.name = "get",
+			.cmd_ptr = &get_parameter_command
+		},
 		{
 			.name = "servo",
-//			.num_args = 1,
-//			.arg_types = (ArgumentType[]) {FLOAT},
 			.cmd_ptr = &set_servo_command
 		}
 };
@@ -52,7 +51,25 @@ char* set_parameter_command(char** argv, unsigned int argc) {
 	}
 }
 
- char* set_servo_command(char** argv, unsigned int argc) {
+char* set_parameter_command(char** argv, unsigned int argc) {
+	if (argc != 1) {
+		return "Syntax: set <variable> <value>";
+	}
+	
+	char* varname = argv[0];
+	float varvalue;
+	if (read_parameter(varname, &varvalue) == 0) { // Returns 0 if error
+		return "No such variable";
+	}
+	else {
+		char* strval;
+		sprintf(strval, "%s = %f", varname, varvalue);
+		return strval;
+	}
+		
+}
+
+char* set_servo_command(char** argv, unsigned int argc) {
 	if (argc != 1) {
 		return "Syntax: servo <value>";
 	}
