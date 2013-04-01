@@ -19,7 +19,7 @@ int m1Percent;
 int m2Percent;
 float servo;
 
-//static Queue queue;
+extern Queue queue;
 
 void DiagnosticsMode(void) {
 	
@@ -63,13 +63,13 @@ void DiagnosticsMode(void) {
 //	
 //	
 //	
-//	while (GetMode() == DIAGNOSTICS) {
+	while (GetMode() == DIAGNOSTICS) {
 //		//updateM1(m1Percent);
 //		//updateM2(m2Percent);
 //		updateServo(servo);
-//		if (!queue_empty(&queue))
-//			sendChar(pop_back(&queue));
-//	}
+		if (!queue_empty(&queue))
+			sendChar(pop_back(&queue));
+	}
 //	
 //	
 //	

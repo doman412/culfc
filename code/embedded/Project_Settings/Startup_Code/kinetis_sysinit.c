@@ -9,7 +9,7 @@
 #include "camera_control.h"
 #include "adc.h"
 #include "button.h"
-#include "uart.h"
+//#include "uart.h"
 #include "BT.h"
 
 typedef void (*const tIsrFunc)(void);

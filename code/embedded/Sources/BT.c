@@ -12,7 +12,7 @@
 
 static char sentence[MAX_QUEUE_SIZE];
 static unsigned int readyToDecode = 0;
-static Queue queue;
+Queue queue;
 
 /*
  * sends a single character.
@@ -88,7 +88,7 @@ void initBT(int mode){
 	// BDL = 0x52 
 	UART0_BDH = 0;
 	UART0_BDL = 52;
-	UART0_C4 |= UART_C4_BRFA(1); 
+	UART0_C4 |= UART_C4_BRFA(0); 
 				
 	// Set FIFO watermark to 1
 	UART0_RWFIFO |= UART_RWFIFO_RXWATER(1);
