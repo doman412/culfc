@@ -9,6 +9,7 @@ m_cfmprotrom  (RX) : ORIGIN = 0x00000400, LENGTH = 0x00000010
 
 KEEP_SECTION { .vectortable }
 KEEP_SECTION { .cfmconfig }
+KEEP_SECTION { .configs }
 
 SECTIONS {
 
@@ -59,6 +60,13 @@ SECTIONS {
 	__END_BSS = .;
 	.= ALIGN(0x8) ;
 } >> m_data
+.configs :
+{
+	. = ALIGN (0x8);
+   __configtable = .;
+    * (.configtable)
+    . = ALIGN (0x4);
+} > m_configs
 
 _romp_at = ___ROM_AT + SIZEOF(.app_data);
 .romp : AT(_romp_at)
@@ -71,14 +79,6 @@ _romp_at = ___ROM_AT + SIZEOF(.app_data);
     WRITEW(0);
     WRITEW(0);
 }
-
-.configs :
-{
-	. = ALIGN (0x8);
-   # __configtable = .;
-    * (.configtable)
-   # . = ALIGN (0x4);
-} > m_configs
 
 __SP_INIT = . + 0x00004000;
 __heap_addr = __SP_INIT;

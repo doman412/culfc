@@ -34,10 +34,10 @@ int main(void) {
 	initBT(1);
 	update_table();
 	
-	updateServo(4.0);
+	updateServo(1.0);
 	
 	blocking_delay(10000000);
-	updateServo(-4.0);
+	updateServo(-1.0);
 	blocking_delay(10000000);
 	updateServo(0.0);
 	

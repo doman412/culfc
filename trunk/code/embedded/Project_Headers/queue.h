@@ -5,7 +5,7 @@
  *      Author: ulab
  */
 
-#ifndef QUEUE_H
+#ifndef QUEUE_H_
 
 #define QUEUE_H_
 
