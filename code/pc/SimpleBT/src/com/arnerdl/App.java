@@ -1,16 +1,14 @@
 package com.arnerdl;
 
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import javax.bluetooth.BluetoothStateException;
@@ -19,10 +17,11 @@ import javax.microedition.io.StreamConnection;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import java.awt.GridLayout;
-import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 public class App {
 
@@ -44,7 +43,23 @@ public class App {
 	boolean goToggle = true;
 	/**
 	 * Launch the application.
+	 * 
+	 * 
 	 */
+	
+	
+	static {
+		try {
+		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+		        if ("Nimbus".equals(info.getName())) {
+		            UIManager.setLookAndFeel(info.getClassName());
+		            break;
+		        }
+		    }
+		} catch (Exception e) {
+		    // If Nimbus is not available, you can set the GUI to another look and feel.
+		}	}
+	
 	public static void main(String[] args) {
 		
 		try {
@@ -213,7 +228,17 @@ public class App {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				command('f', varText.getText());
+				try {
+					if(writer!=null){
+						writer.write("set " + varText.getText());
+						writer.flush();
+					}
+					((JPanel)frmAutobotsControlPanel.getContentPane()).grabFocus();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				//command('f', varText.getText());
 			}
 		});
 		right_col.add(varText);
