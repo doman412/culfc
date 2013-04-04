@@ -86,6 +86,8 @@ void initBT(int mode){
 	// (96,000,000 Hz / 115200 Hz) / 16 = 52.083, or 0x0052 + 1/16 (BFA)
 	// BDH[4:0] = 0x00
 	// BDL = 0x52 
+	//UART0_BDH |= 0x02;
+	//UART0_BDL |= 0x71;
 	UART0_BDH = 0;
 	UART0_BDL = 52;
 	UART0_C4 |= UART_C4_BRFA(0); 
@@ -112,7 +114,7 @@ void bt_isr(void){
 	
 	sendChar(ch);
 	
-	if(ch==10){ // backspace was pressed.
+	if(ch==127){ // backspace was pressed.
 		pop_front(&queue);
 	}
 	else{
@@ -120,6 +122,7 @@ void bt_isr(void){
 	}
 	
 	if(ch==13){ // enter was pressed.
+		sendChar(10);
 		readyToDecode++;
 	}
 	
@@ -145,7 +148,7 @@ void decodeBT(){
 			// No command is executed
 			else
 				return;
-		} while (c != '\n');
+		} while (c != 13);
 		
 		sentence[i-1] = '\0';
 		decode(sentence);
@@ -155,6 +158,7 @@ void decodeBT(){
  * decodes the command that was sent, then executes the command
  */
 void decode(char* sentence){
+	char* message;
 	char* argv[MAX_ARGC];
 	unsigned int argc = 0;
 	char* command = (char*)strtok(sentence, " ");
@@ -173,8 +177,19 @@ void decode(char* sentence){
 	}
 	
 	Command cmd = find_command(command);
-	char* message = cmd(argv, argc);
-	sendStr(message);
+	
+	if(cmd != NULL){
+		message = cmd(argv, argc);
+	}
+	else
+		message = "Command not found";
+	
+	if(message != NULL){
+		sendStr("K40> ");
+		sendStr(message);
+		sendChar(13);
+		sendChar(10);
+	}
 }
 
 

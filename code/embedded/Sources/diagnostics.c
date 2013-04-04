@@ -63,13 +63,13 @@ void DiagnosticsMode(void) {
 //	
 //	
 //	
-	while (GetMode() == DIAGNOSTICS) {
+//	while (GetMode() == DIAGNOSTICS) {
 //		//updateM1(m1Percent);
 //		//updateM2(m2Percent);
 //		updateServo(servo);
-		if (!queue_empty(&queue))
-			sendChar(pop_back(&queue));
-	}
+//		if (!queue_empty(&queue))
+//			sendChar(pop_back(&queue));
+//	}
 //	
 //	
 //	

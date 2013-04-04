@@ -43,9 +43,15 @@ void InitFlexTimer1() {
 void updateServo(float servoPos) {
 	float servoCv;
 	uint32_t servoCvInt;
-	servoCv = (servoPos * 90) + 2250;
-	if (servoCv >= 0 | servoCv <= 3000) {
-		servoCvInt = (uint32_t) round(servoCv);
-		FTM1_C0V = servoCvInt;
+	
+	if(servoPos > 1){
+		servoPos = 1;
 	}
+	else if (servoPos < -1){
+		servoPos = -1;
+	}
+	
+	servoCv = (servoPos * 450) + 2250;
+	servoCvInt = (uint32_t) round(servoCv);
+	FTM1_C0V = servoCvInt;
 }
