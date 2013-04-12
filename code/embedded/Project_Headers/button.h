@@ -15,6 +15,7 @@
 
 void initButton(void); // button initilization for PTC5 with pin default to input
 int GetButtonState(void); // Getter function for the state of the toggle button
+void SetButtonState(void); // used to manually set button state
 void ResetButtonState(void); // sets button state to zero used for line detection stop
 void portc_isr(void); // interrupt service for port C
 
