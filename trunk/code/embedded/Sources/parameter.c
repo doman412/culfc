@@ -12,7 +12,8 @@ float KP;
 float KI;
 float KD;
 float servo_offset_float = 0;
-int SERVO_OFFSET = -30;
+int SERVO_OFFSET = -32;
+float SERVO_OVERSHOOT = 0.022;
 
 variable_entry_t variables[] = {
 		{
@@ -34,6 +35,10 @@ variable_entry_t variables[] = {
 		{
 			.name = "servo_offset",
 			.ptr = &servo_offset_float
+		},
+		{
+			.name = "servo_overshoot",
+			.ptr = &SERVO_OVERSHOOT
 		},
 		{
 			.name = "echo",

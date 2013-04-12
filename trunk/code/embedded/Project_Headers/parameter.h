@@ -12,7 +12,7 @@
 
 #pragma define_section configtable ".configtable" ".configtable" ".configtable" far_abs RW
 
-#define NUM_VARIABLES 6
+#define NUM_VARIABLES 7
 #define NUM_FLASH_VARIABLES 4
 
 

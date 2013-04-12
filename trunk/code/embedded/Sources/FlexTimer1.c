@@ -39,10 +39,20 @@ void InitFlexTimer1() {
  FTM1_C0V = DuyCycleS1;      // set the count value and determines pulse width
 
  }*/
-
+float prev_pos = 0;
+extern float SERVO_OVERSHOOT;
 void updateServo(float servoPos) {
 	float servoCv;
 	uint32_t servoCvInt;
+	
+	if(prev_pos < servoPos){
+		prev_pos = servoPos;
+		servoPos+=SERVO_OVERSHOOT;
+	}
+	else if(prev_pos > servoPos){
+		prev_pos = servoPos;
+		servoPos-=SERVO_OVERSHOOT;
+	}
 	
 	if(servoPos > 1){
 		servoPos = 1;
