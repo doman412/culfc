@@ -13,6 +13,7 @@
 static char sentence[MAX_QUEUE_SIZE];
 static unsigned int readyToDecode = 0;
 Queue queue;
+int ECHO = 0;
 
 /*
  * sends a single character.
@@ -111,8 +112,8 @@ void bt_isr(void){
 	char ch;
 	UART0_S1 &= ~(UART_S1_RDRF_MASK);
 	ch = UART0_D;
-	
-	sendChar(ch);
+	if(ECHO)
+		sendChar(ch);
 	
 	if(ch==127){ // backspace was pressed.
 		pop_front(&queue);
@@ -122,7 +123,8 @@ void bt_isr(void){
 	}
 	
 	if(ch==13){ // enter was pressed.
-		sendChar(10);
+		if(ECHO)
+			sendChar(10);
 		readyToDecode++;
 	}
 	

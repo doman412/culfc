@@ -9,6 +9,7 @@
 #include "pid.h"
 #include "FlexTimer.h"
 #include "FlexTimer1.h"
+#include "BT.h"
 
 int moving;
 int error;
@@ -23,6 +24,9 @@ void PIDMode(void) {
 			if (GetButtonState() || FinishLineDetected()) {
 				ResetButtonState();
 				moving = 0;
+				updateServo(0);
+				updateM1(MOTOR_BRAKE);
+				updateM2(MOTOR_BRAKE);
 				continue;
 			}
 
@@ -37,12 +41,9 @@ void PIDMode(void) {
 			if (GetButtonState()) {
 				moving = 1;
 				ResetButtonState();
-				continue;
-			}
-
-			updateServo(0);
-			updateM1(MOTOR_BRAKE);
-			updateM2(MOTOR_BRAKE);
+				//continue;
+			}			
 		}
+		decodeBT();
 	}
 }

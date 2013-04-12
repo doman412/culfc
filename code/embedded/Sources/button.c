@@ -58,7 +58,11 @@ void portc_isr(void) {
 }
 
 void ResetButtonState(void) {
-	toggleButtonState = 0; // resets button sate to zero for finish line detection
+	toggleButtonState = 0; // resets button state to zero for finish line detection
+}
+
+void SetButtonState(void){
+	toggleButtonState = 1; // Used to manually set button state
 }
 
 int GetButtonState(void) {

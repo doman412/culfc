@@ -44,7 +44,7 @@ int main(void) {
 	
 
 	for (;;) {
-		 if (GetMode() == DIAGNOSTICS) {
+		if (GetMode() == DIAGNOSTICS) {
 			 
 			DiagnosticsMode();
 			

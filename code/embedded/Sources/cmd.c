@@ -6,9 +6,11 @@
  */
 #include "cmd.h"
 #include "null.h"
+#include "button.h"
 #include "parameter.h"
 #include "FlexTimer.h"
 #include "FlexTimer1.h"
+#include "mode.h"
 #include "stdlib.h"
 
 const CommandProperties command_list[] = {
@@ -21,6 +23,14 @@ const CommandProperties command_list[] = {
 			.cmd_ptr = &set_motor_command
 		},
 		{
+			.name = "l",
+			.cmd_ptr = &set_left_motor_command
+		},
+		{
+			.name = "r",
+			.cmd_ptr = &set_right_motor_command
+		},
+		{
 			.name = "set",
 			.cmd_ptr = &set_parameter_command
 		},
@@ -29,12 +39,32 @@ const CommandProperties command_list[] = {
 			.cmd_ptr = &get_parameter_command
 		},
 		{
+			.name = "go",
+			.cmd_ptr = &go_command
+		},
+		{
+			.name = "stop",
+			.cmd_ptr = &stop_command
+		},
+		{
 			.name = "servo",
 			.cmd_ptr = &set_servo_command
 		},
 		{
 			.name = "motor",
 			.cmd_ptr = &set_motor_command
+		},
+		{
+			.name = "left_motor",
+			.cmd_ptr = &set_left_motor_command
+		},
+		{
+			.name = "right_motor",
+			.cmd_ptr = &set_right_motor_command
+		},
+		{
+			.name = "mode",
+			.cmd_ptr = &mode_command
 		}
 };
 
@@ -105,3 +135,52 @@ char* set_motor_command(char** argv, unsigned int argc){
 	updateM2(value);
 	return NULL;
 }
+
+char* set_left_motor_command(char** argv, unsigned int argc){
+	if (argc != 1) {
+			return "Syntax: l[eft_motor] <value>";
+	}
+	
+	int value = atoi(argv[0]);
+	updateM1(value);
+	return NULL;
+}
+
+char* set_right_motor_command(char** argv, unsigned int argc){
+	if (argc != 1) {
+			return "Syntax: r[ight_motor] <value>";
+	}
+	
+	int value = atoi(argv[0]);
+	updateM2(value);
+	return NULL;
+}
+
+char* go_command(char** argv, unsigned int argc){
+	SetButtonState();
+	return NULL;
+}
+
+extern int moving;
+
+char* stop_command(char** argv, unsigned int argc){
+	moving = 0;
+	updateServo(0);
+	updateM1(MOTOR_BRAKE);
+	updateM2(MOTOR_BRAKE);
+	return NULL;
+}
+
+char* mode_command(char** argv, unsigned int argc){
+	Mode mode = GetMode();
+	
+	if (mode == ACCURACY)
+		SetMode(SPEED);
+	else if (mode == SPEED)
+		SetMode(DIAGNOSTICS);
+	else
+		SetMode(ACCURACY);
+	
+	return NULL;
+}
+
