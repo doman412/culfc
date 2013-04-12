@@ -6,12 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-import javax.bluetooth.BluetoothStateException;
 import javax.microedition.io.Connector;
 import javax.microedition.io.StreamConnection;
 import javax.swing.JButton;
@@ -24,21 +24,13 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 public class App {
-
-	private JFrame frmAutobotsControlPanel;
-	private JTextField txtData;
-	private JTextField txtStop;
-	
 	private static StreamConnection con;
 	private static BufferedWriter writer;
-	private static DataInputStream reader;
-	private JTextField goText;
-	private JTextField revText;
-	private JTextField varText;
-	private JTextField varSelectText;
-	private JTextField opGoText;
+	private static BufferedReader reader;
 	
-	private static  AutobotsLog log;
+	private JFrame frmAutobotsControlPanel;
+	
+	private static AutobotsLog log;
 	
 	boolean goToggle = true;
 	/**
@@ -51,7 +43,7 @@ public class App {
 	static {
 		try {
 		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-		        if ("Nimbus".equals(info.getName())) {
+		    	if ("Windows".equals(info.getName())) {
 		            UIManager.setLookAndFeel(info.getClassName());
 		            break;
 		        }
@@ -65,48 +57,51 @@ public class App {
 		try {
 			con = (StreamConnection)Connector.open("btspp://000666006C08:1");
 			writer = new BufferedWriter(new OutputStreamWriter(con.openOutputStream()));
-//			reader = new BufferedReader(new InputStreamReader(con.openInputStream()));
-			reader = con.openDataInputStream();
-
-			(new Thread(new Runnable(){
-				@Override
-				public void run() {
-					int counter = 0;
-					long thresh = 500;
-					long time = System.currentTimeMillis();
-					int data;
-					char diagBuf[] = new char[15];
-					System.out.println("****NEW RUN*****");
-					while(true){
-						try{
-//							if(reader.ready()){
-								if(counter<10)
-									diagBuf[counter++] = (char)reader.readByte();
-								else {
-									data = (int)reader.readByte();
-									counter = 0;
-//									for(int i=0; i<10; i++){
-//										System.out.print(diagBuf[i]);
-//									}
-//									System.out.println(data);
-									log.print("Car Data: " + new String(diagBuf) + (data & 0xFF) + "\n");
-								}
-//							}
-							
-						} catch( IOException e){
-							System.err.println("IOException in reader thread");
-						}
-					}
-				}
-			})).start();
-		} catch (BluetoothStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			reader = new BufferedReader(new InputStreamReader(con.openInputStream()));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+//			reader = con.openDataInputStream();
+
+/*		(new Thread(new Runnable(){
+			public void run() {
+				// TODO Auto-generated method stub
+				while(true){
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						con = (StreamConnection)Connector.open("btspp://000666006C08:1");
+						writer = new BufferedWriter(new OutputStreamWriter(con.openOutputStream()));
+						reader = new BufferedReader(new InputStreamReader(con.openInputStream()));
+						log.print("New connection\n");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						//System.err.println("Already Connected");
+					}
+					
+				}	
+			}				
+		})).start();*/
+			
+		(new Thread(new Runnable() {
+			public void run() {
+				while(true){
+					try {
+						if(reader.ready())
+							log.print(reader.readLine()+"\n");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		})).start();
+			
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -142,143 +137,151 @@ public class App {
 		frmAutobotsControlPanel.getContentPane().add(panel);
 		panel.setLayout(new GridLayout(0, 2, 0, 0));
 		((JPanel)frmAutobotsControlPanel.getContentPane()).grabFocus();
+		
 		JPanel left_col = new JPanel();
-		panel.add(left_col);
-		left_col.setLayout(new GridLayout(0, 2, 0, 0));
-		
-		JButton btnServo = new JButton("Servo");
-		left_col.add(btnServo);
-		
-		txtData = new JTextField();
-		txtData.setText("data");
-		left_col.add(txtData);
-		txtData.setColumns(10);
-		goText = new JTextField();
-		JButton btnGo = new JButton("Go");
-		btnGo.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				command('g', goText.getText());
-			}
-			
-		});
-		left_col.add(btnGo);
-		
-		
-		left_col.add(goText);
-		goText.setColumns(10);
-		
-		JButton btnVarselect = new JButton("varSelect");
-		left_col.add(btnVarselect);
-		
-		varSelectText = new JTextField();
-		btnVarselect.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				command('x', varSelectText.getText());
-			}
-			
-		});
-		left_col.add(varSelectText);
-		varSelectText.setColumns(10);
-		
 		JPanel right_col = new JPanel();
+		panel.add(left_col);
 		panel.add(right_col);
+		left_col.setLayout(new GridLayout(0, 2, 0, 0));
 		right_col.setLayout(new GridLayout(0, 2, 0, 0));
 		
-		final JButton btnStop = new JButton("Stop!");
-		btnStop.addActionListener(new ActionListener(){
+		final JTextField servoText = new JTextField();
+		final JTextField txtDrive = new JTextField();
+		final JTextField txtLMotor = new JTextField();
+		final JTextField txtRMotor = new JTextField();
+		final JTextField txtMode = new JTextField();
+		final JTextField txtGet = new JTextField();
+		final JTextField txtParm = new JTextField();
+		final JTextField txtData = new JTextField();
+		final JTextField txtCmd = new JTextField();
+		final JTextField txtArgs = new JTextField();
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				command('b', "1");
-				goToggle = true;
-			}
-			
-		});
+		JButton btnServo = new JButton("Servo");
+		JButton btnDrive = new JButton("Drive");
+		JButton btnLMotor = new JButton("Left Motor");
+		JButton btnRMotor = new JButton("Right Motor");
+		final JButton btnGo = new JButton("Go");
+		final JButton btnStop = new JButton("Stop");
+		JButton btnMode = new JButton("Mode");
+		JButton btnGet = new JButton("Get");
+		JButton btnSet = new JButton("Set");
+		JButton btnCmd = new JButton("Custom Commad");
+		
+		left_col.add(btnServo);
+		left_col.add(servoText);
+		left_col.add(btnDrive);
+		left_col.add(txtDrive);
+		left_col.add(btnLMotor);
+		left_col.add(txtLMotor);
+		left_col.add(btnRMotor);
+		left_col.add(txtRMotor);
+		left_col.add(btnCmd);
+		left_col.add(new JPanel());
+		left_col.add(txtCmd);
+		left_col.add(txtArgs);
+		right_col.add(btnGo);
 		right_col.add(btnStop);
-		
-		txtStop = new JTextField();
-		txtStop.setText("STOP");
-		right_col.add(txtStop);
-		txtStop.setColumns(10);
-		revText = new JTextField();
-		JButton btnReverse = new JButton("Reverse");
-		btnReverse.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				command('r', revText.getText());
-			}
-			
-		});
-		right_col.add(btnReverse);
-		
-		
-		right_col.add(revText);
-		revText.setColumns(10);
-		
-		JButton varBtn = new JButton("varBtn");
-		right_col.add(varBtn);
-		
-		varText = new JTextField();
-		varBtn.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					if(writer!=null){
-						writer.write("set " + varText.getText());
-						writer.flush();
-					}
-					((JPanel)frmAutobotsControlPanel.getContentPane()).grabFocus();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				//command('f', varText.getText());
-			}
-		});
-		right_col.add(varText);
-		varText.setText("varTxt");
-		varText.setColumns(10);
-		
-		final JButton btnOpgo = new JButton("opGo");
-		right_col.add(btnOpgo);
-		
-		opGoText = new JTextField();
-		btnOpgo.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				command('o', opGoText.getText());
-				goToggle = false;
-				
-			}
-		});
-		right_col.add(opGoText);
-		opGoText.setColumns(10);
+		right_col.add(btnMode);
+		right_col.add(txtMode);
+		right_col.add(btnGet);
+		right_col.add(txtGet);
+		right_col.add(btnSet);
+		right_col.add(new JPanel());
+		right_col.add(txtParm);
+		right_col.add(txtData);
 		
 		btnServo.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				command('s', txtData.getText());
+				command("s", servoText.getText());
+			}
+			
+		});
+		btnDrive.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				command("m", txtDrive.getText());
+			}
+			
+		});
+		btnLMotor.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				command("l", txtLMotor.getText());
+			}
+			
+		});
+		btnRMotor.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				command("r", txtRMotor.getText());
+				
+			}
+			
+		});
+		btnGo.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				command("go");
+				goToggle = false;
+			}
+			
+		});
+		btnStop.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				command("stop");
+				goToggle = true;
+			}
+			
+		});
+		btnMode.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				command("mode");
+			}
+			
+		});
+		btnGet.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				command("get", txtGet.getText());
+			}
+			
+		});
+		btnSet.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				command("set", txtParm.getText()+" "+txtData.getText());
+			}
+			
+		});
+		btnCmd.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				command(txtCmd.getText(), txtArgs.getText());
 			}
 			
 		});
 		
+		
 		JTextArea textArea = new JTextArea("PrimeOS v1.1\nNow Logged into Optimus Prime\nWelcome to the Optimus Prime Configuration System.\n");
-		this.log = new AutobotsLog(textArea);
+		App.log = new AutobotsLog(textArea);
 		
 		JScrollPane scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setAutoscrolls(true);
 		frmAutobotsControlPanel.getContentPane().add(scrollPane);
-		
-		
 		
 		frmAutobotsControlPanel.setFocusable(true);
 		frmAutobotsControlPanel.getContentPane().addKeyListener(new KeyListener(){
@@ -291,27 +294,27 @@ public class App {
 			public void keyPressed(KeyEvent e) {
 				if(e.getKeyCode()==KeyEvent.VK_SPACE){
 					if(goToggle)
-						btnOpgo.doClick();
+						btnGo.doClick();
 					else
 						btnStop.doClick();
 				}
 				if(e.getKeyCode()==KeyEvent.VK_ENTER){
-					command('d', "1");
+					command("stop");
 				}
 				
 				if(goToggle){
 					if(e.getKeyCode()==KeyEvent.VK_UP){
-						driveDown = true;
-						command('m', "60");
+						//driveDown = true;
+						command("m", "60");
 					}
 					if(e.getKeyCode()==KeyEvent.VK_DOWN){
-						command('m', "-60");
+						command("m", "-60");
 					}
 					if(e.getKeyCode()==KeyEvent.VK_LEFT){
-						command('s', "-1");
+						command("s", "-1");
 					}
 					if(e.getKeyCode()==KeyEvent.VK_RIGHT){
-						command('s', "1");
+						command("s", "1");
 					}
 				}
 				
@@ -322,18 +325,18 @@ public class App {
 				if(goToggle){
 					if(e.getKeyCode()==KeyEvent.VK_UP){
 						driveDown = false;
-						command('m', "1");
+						command("m", "255");
 					}
 					if(e.getKeyCode()==KeyEvent.VK_DOWN){
-						command('m', "1");
+						command("m", "255");
 					}
 					if(e.getKeyCode()==KeyEvent.VK_RIGHT || e.getKeyCode()==KeyEvent.VK_LEFT){
-						command('s', "0");
+						command("s", "0");
 					}
 				}
-				if(e.getKeyCode()==KeyEvent.VK_ENTER){
-					command('d', "0");
-				}
+				//if(e.getKeyCode()==KeyEvent.VK_ENTER){
+				//	command('d', "0");
+				//}
 			}
 
 			@Override
@@ -344,17 +347,26 @@ public class App {
 		});
 	}
 	
-	private void command(char cmd, String data){
+	private void command(String cmd, String arg){
 		try {
 			if(writer!=null){
-				writer.write(""+cmd+" "+data+"\r");
+				writer.write(""+cmd+" "+arg+"\r");
 				writer.flush();
 			}
-			if(cmd=='f'){
-//				log.print("Sending: "+cmd+" "+data+"\n");
-				log.print("Updated: "+varSelectText.getText()+ " with " + data+"\n");
-			} else {
-				log.print("Sending: "+cmd+" "+data+"\n");
+			
+			((JPanel)frmAutobotsControlPanel.getContentPane()).grabFocus();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void command(String cmd){
+		try {
+			if(writer!=null){
+				writer.write(""+cmd+"\r");
+				writer.flush();
 			}
 			
 			((JPanel)frmAutobotsControlPanel.getContentPane()).grabFocus();
