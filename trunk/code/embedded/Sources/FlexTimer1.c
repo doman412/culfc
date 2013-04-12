@@ -51,7 +51,7 @@ void updateServo(float servoPos) {
 		servoPos = -1;
 	}
 	
-	servoCv = (servoPos * 450) + 2250;
+	servoCv = (servoPos * 450) + 2250 + SERVO_OFFSET;
 	servoCvInt = (uint32_t) round(servoCv);
 	FTM1_C0V = servoCvInt;
 }

@@ -35,12 +35,16 @@ void InitFlexTimer0() {
 	FTM0_SC |= FTM_SC_CLKS(1);
 
 }
+
+const int LEFT_MOTOR_BIAS[] = {0,1,1,2,3,4,5,6,7,4};
+
 // FTM0_CV_VALUE 3000   // 3000/(MOD+1) = 25% duty cycle
 void updateM1(int m1Percent) {
 	// Do math to convert dutyCycle to CV value
 	// Set ftm0c3v register to value 
 	uint16_t m1Duty;
-
+	int m1PercentNorm;
+	
 	if (m1Percent == MOTOR_FREEWHEEL) {
 		DisableM1();
 	}
@@ -50,11 +54,13 @@ void updateM1(int m1Percent) {
 		FTM0_C4V = 0;
 	}
 	else if (m1Percent < 0) {
-		m1Duty = (uint16_t) (m1Percent * -30);
+		m1PercentNorm = m1Percent + LEFT_MOTOR_BIAS[(m1Percent-1)/10];
+		m1Duty = (uint16_t) (m1PercentNorm * -30);
 		FTM0_C5V = 0; // Motor 1 Forward
 		FTM0_C4V = m1Duty; // Motor 1 Reverse
 	} else if (m1Percent > 0) {
-		m1Duty = (uint16_t) (m1Percent * 30);
+		m1PercentNorm = m1Percent - LEFT_MOTOR_BIAS[(m1Percent-1)/10];
+		m1Duty = (uint16_t) (m1PercentNorm * 30);
 		FTM0_C5V = m1Duty; // Motor 1 Forward
 		FTM0_C4V = 0; // Motor 1 Reverse
 	}
