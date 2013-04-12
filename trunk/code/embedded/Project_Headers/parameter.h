@@ -8,27 +8,21 @@
 #define PARAMETER_H_
 
 #include <derivative.h>
-#include "cmd.h"
+#include "mode.h"
 
 #pragma define_section configtable ".configtable" ".configtable" ".configtable" far_abs RW
 
-#define NUM_VARIABLES 3
+#define NUM_VARIABLES 6
+#define NUM_FLASH_VARIABLES 4
 
-//typedef union {
-//	float f;
-//	int i;
-//	double d;
-//	long l;
-//} flash_parameter_t;
 
 typedef struct {
 	char* name;
 	float* ptr;
 } variable_entry_t;
 
-//#define KP (parms[0])
-//#define KI (parms[1])
-//#define KD (parms[2])
+extern Mode mode;
+extern int ECHO;
 
 void update_table();
 int change_parameter(char* name, float value);

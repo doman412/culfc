@@ -9,9 +9,9 @@
 #define MODE_H_
 
 typedef enum {
-	ACCURACY,
-	SPEED,
-	DIAGNOSTICS} Mode;
+	ACCURACY = 0,
+	SPEED = 1,
+	DIAGNOSTICS = 2} Mode;
 
 
 Mode GetMode(void);
