@@ -11,8 +11,8 @@ __declspec(configtable) float __parms[NUM_VARIABLES];
 float KP;
 float KI;
 float KD;
-float servo_offset_float = 0;
-int SERVO_OFFSET = -32;
+float servo_offset_float = -27;
+int SERVO_OFFSET = -27;
 float SERVO_OVERSHOOT = 0.022;
 
 variable_entry_t variables[] = {
@@ -43,6 +43,10 @@ variable_entry_t variables[] = {
 		{
 			.name = "echo",
 			.ptr = (float*)&ECHO
+		},
+		{
+			.name = "line_capture",
+		    .ptr = (float*)&line_capture
 		}
 };
 

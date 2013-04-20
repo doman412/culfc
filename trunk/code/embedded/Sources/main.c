@@ -32,6 +32,9 @@ int main(void) {
 	InitFlexTimer0();
 	InitFlexTimer1();
 	initBT(1);
+	change_parameter("kp", 0.05);
+	change_parameter("ki", 0);
+	change_parameter("kd", 0.001);
 	update_table();
 	
 	updateServo(1.0);

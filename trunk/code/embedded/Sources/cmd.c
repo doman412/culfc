@@ -12,6 +12,7 @@
 #include "FlexTimer1.h"
 #include "mode.h"
 #include "stdlib.h"
+#include "pid.h"
 
 const CommandProperties command_list[] = {
 		{
@@ -47,6 +48,10 @@ const CommandProperties command_list[] = {
 			.cmd_ptr = &stop_command
 		},
 		{
+			.name = "rp",
+			.cmd_ptr = &reset_pid_command
+		},
+		{
 			.name = "servo",
 			.cmd_ptr = &set_servo_command
 		},
@@ -65,6 +70,10 @@ const CommandProperties command_list[] = {
 		{
 			.name = "mode",
 			.cmd_ptr = &mode_command
+		},
+		{
+			.name = "reset_pid",
+			.cmd_ptr = &reset_pid_command
 		}
 };
 
@@ -181,6 +190,11 @@ char* mode_command(char** argv, unsigned int argc){
 	else
 		SetMode(ACCURACY);
 	
+	return NULL;
+}
+
+char* reset_pid_command(char** argv, unsigned int argc){
+	reset_pid();
 	return NULL;
 }
 
