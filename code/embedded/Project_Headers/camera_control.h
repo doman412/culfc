@@ -26,7 +26,7 @@ typedef struct {
  * 
  * GND B2
  * VDD B1
- * CLK B66 (PTA10)
+ * CLK B72 (PTA11)
  * SI  B67 (PTA9)
  * AO A27 (ADC0_DP0)
  */

@@ -8,7 +8,7 @@ typedef struct CommandProperties {
 	Command cmd_ptr;
 } CommandProperties;
 
-#define NUM_CMDS 13 // includes command aliases
+#define NUM_CMDS 15 // includes command aliases
 #define MAX_ARGC 2
 extern const CommandProperties command_list[NUM_CMDS];
 
@@ -23,5 +23,6 @@ char* set_right_motor_command(char** argv, unsigned int argc);
 char* go_command(char** argv, unsigned int argc);
 char* stop_command(char** argv, unsigned int argc);
 char* mode_command(char** argv, unsigned int argc);
+char* reset_pid_command(char** argv, unsigned int argc);
 
 #endif 
