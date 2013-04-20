@@ -45,14 +45,14 @@ void updateServo(float servoPos) {
 	float servoCv;
 	uint32_t servoCvInt;
 	
-	if(prev_pos < servoPos){
-		prev_pos = servoPos;
-		servoPos+=SERVO_OVERSHOOT;
-	}
-	else if(prev_pos > servoPos){
-		prev_pos = servoPos;
-		servoPos-=SERVO_OVERSHOOT;
-	}
+//	if(prev_pos < servoPos){
+//		prev_pos = servoPos;
+//		servoPos+=SERVO_OVERSHOOT;
+//	}
+//	else if(prev_pos > servoPos){
+//		prev_pos = servoPos;
+//		servoPos-=SERVO_OVERSHOOT;
+//	}
 	
 	if(servoPos > 1){
 		servoPos = 1;

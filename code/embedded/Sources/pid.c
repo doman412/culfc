@@ -9,6 +9,11 @@
 #include "math.h"
 #include "FlexTimer.h"
 
+static float previousError1 = 0;
+static float previousError2 = 0;
+static float previousServoOutput = 0;
+static float previousMotorOutput = 0;
+
 void PIDErrorControl(int error, Mode mode, OutputMap* outputMap) {
 	static float previousError1 = 0;
 	static float previousError2 = 0;
@@ -76,4 +81,11 @@ void PIDErrorControl(int error, Mode mode, OutputMap* outputMap) {
 	outputMap->servo = currentServoOutput;
 	outputMap->leftMotor = currentLeftOutput;
 	outputMap->rightMotor = currentRightOutput;
+}
+
+void reset_pid(){
+	previousError1 = 0;
+	previousError2 = 0;
+	previousServoOutput = 0;
+	previousMotorOutput = 0;
 }

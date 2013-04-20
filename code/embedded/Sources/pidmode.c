@@ -11,7 +11,7 @@
 #include "FlexTimer1.h"
 #include "BT.h"
 
-int moving;
+int moving = 0;
 int error;
 OutputMap container;
 
@@ -46,4 +46,5 @@ void PIDMode(void) {
 		}
 		decodeBT();
 	}
+	decodeBT();
 }

@@ -9,6 +9,7 @@
 #include "derivative.h"
 #include "adc.h"
 #include "track.h"
+#include "BT.h"
 
 void InitPortA(void);
 void InitGPIO(void);
@@ -20,11 +21,14 @@ void FindBlackBoundaries(void);
 uint32_t iptFlag = 0;
 
 uint16_t fallingEdgeCount;
+uint16_t prevEdgeCount;
 uint16_t currentLine[128];
 
 uint16_t dataReady = 0;
 
 extern TrackMap trackMap;
+int line_capture = 0;
+int capture = 0;
 
 void InitializeCamera(void) {
 	InitPortA();
@@ -41,19 +45,20 @@ void InitializeFTM2() {
 	FTM2_SC = 0;
 	FTM2_CNTIN = 0;
 	FTM2_CNT = 0;
-	FTM2_C0SC = FTM_CnSC_CHIE_MASK | FTM_CnSC_MSB_MASK | FTM_CnSC_ELSB_MASK;
+	FTM2_C1SC = FTM_CnSC_CHIE_MASK | FTM_CnSC_MSB_MASK | FTM_CnSC_ELSB_MASK;
 
-	FTM2_MOD = 479;
-	FTM2_C0V = 240;
-
+	FTM2_MOD = 959;
+	FTM2_C1V = 0;
+	//FTM2_C1V = 240;
+	FTM2_SC |= FTM_SC_CLKS(1);
 }
 
 void InitPortA(void) {
 	// Clock to Port A
 	SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK;
 
-	// Set as FTM2_CH0
-	PORTA_PCR10 |= PORT_PCR_MUX(3);
+	// Set as FTM2_CH1
+	PORTA_PCR11 |= PORT_PCR_MUX(3);
 
 	// Set as GPIO
 	PORTA_PCR9 = PORT_PCR_MUX(1);
@@ -90,7 +95,7 @@ void ConfigureAndStartPIT(void) {
 	// Turn on power to PIT
 	SIM_SCGC6 |= SIM_SCGC6_PIT_MASK;
 	PIT_MCR = 0x01; // Turn on the PIT
-	PIT_LDVAL0 = 239999;
+	PIT_LDVAL0 = 479999;
 	PIT_TCTRL0 = PIT_TCTRL_TIE_MASK; // Enable interrupts
 	PIT_TCTRL0 |= PIT_TCTRL_TEN_MASK; // Turn on the timer
 }
@@ -103,7 +108,13 @@ void PITExpiredISR(void) {
 
 	CAMERA_SI_DATA = 1;
 	// Start clock
-	FTM2_SC |= FTM_SC_CLKS(1);
+	//FTM2_SC |= FTM_SC_CLKS(1);
+	FTM2_CNT = 0;
+	FTM2_C1V = 480;
+	if(line_capture){
+		capture = 1;
+		sendStr("l\n");
+	}
 }
 
 void HandleCameraData(void) {
@@ -113,7 +124,6 @@ void HandleCameraData(void) {
 	// Therefore, index will range from 0 to 128
 	// We only want 0-127 to make it in to the array
 	currentLine[fallingEdgeCount - 1] = ADC0_RA;
-
 }
 
 void FindBlackBoundaries(void) {
@@ -142,6 +152,12 @@ void FindBlackBoundaries(void) {
 		}
 	}
 	dataReady = 1;
+	//if(line_capture){
+	//	line_capture = 0;
+	//	sendStr("l\n");
+	//	for(i=0; i<128; i++)
+	//		sendChar(currentLine[i]);
+	//}
 }
 
 int FinishLineDetected(void) {
@@ -184,13 +200,22 @@ int FinishLineDetected(void) {
 }
 
 void CamFalling(void) {
-	iptFlag = FTM2_C0SC;
-	FTM2_C0SC &= ~FTM_CnSC_CHF_MASK;
+	iptFlag = FTM2_C1SC;
+	FTM2_C1SC &= ~FTM_CnSC_CHF_MASK;
 
 	fallingEdgeCount++;
 	CAMERA_SI_DATA = 0;
+	
+	if(capture){
+		if(fallingEdgeCount > 1){
+			sendChar(currentLine[fallingEdgeCount-1]);
+		}
+	}
+	
 	if (fallingEdgeCount == 129) {
-		FTM2_SC = 0;
+		line_capture=capture=0;
+		FTM2_C1V = 0;
+		//FTM2_SC = 0;
 		fallingEdgeCount = 0;
 		FindBlackBoundaries();
 	} else {
@@ -208,6 +233,8 @@ int GetCameraData(void) {
 	//	if (trackMap.fallingEdgeCount == 1 && trackMap.risingEdgeCount == 1) {
 	error = ((trackMap.fallingEdges[0] + trackMap.risingEdges[0]) / 2) - 63;
 	//	}
-
+	//sendStr("err\n");
+	//sendChar(error);
+	//sendChar("\n");
 	return error;
 }
