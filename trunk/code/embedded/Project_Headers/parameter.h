@@ -12,7 +12,7 @@
 
 #pragma define_section configtable ".configtable" ".configtable" ".configtable" far_abs RW
 
-#define NUM_VARIABLES 7
+#define NUM_VARIABLES 8
 #define NUM_FLASH_VARIABLES 4
 
 
@@ -23,6 +23,7 @@ typedef struct {
 
 extern Mode mode;
 extern int ECHO;
+extern int line_capture;
 
 void update_table();
 int change_parameter(char* name, float value);

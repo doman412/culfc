@@ -28,10 +28,13 @@ void PIDErrorControl(int error, Mode mode, OutputMap* container);
  * Accuracy mode constants.
  * 
  */
+extern float KP;
+extern float KI;
+extern float KD;
 
-#define KP_ACCURACY 0.25
-#define KI_ACCURACY 0
-#define KD_ACCURACY 0
+#define KP_ACCURACY KP // 0.03125
+#define KI_ACCURACY KI
+#define KD_ACCURACY KD
 
 #define K1_ACCURACY (KP_ACCURACY + KI_ACCURACY + KD_ACCURACY)
 #define K2_ACCURACY (-KP_ACCURACY - 2*KD_ACCURACY)
@@ -43,12 +46,14 @@ void PIDErrorControl(int error, Mode mode, OutputMap* container);
  * 
  */
 
-#define KP_SPEED 0.15
-#define KI_SPEED 0
-#define KD_SPEED 0
+#define KP_SPEED KP//0.03125
+#define KI_SPEED KI
+#define KD_SPEED KD
 
 #define K1_SPEED (KP_SPEED + KI_SPEED + KD_SPEED)
 #define K2_SPEED (-KP_SPEED - 2*KD_SPEED)
 #define K3_SPEED KD_SPEED
+
+void reset_pid();
 
 #endif /* PID_H_ */
