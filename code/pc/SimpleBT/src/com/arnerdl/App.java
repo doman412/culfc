@@ -11,6 +11,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.nio.CharBuffer;
+import java.nio.DoubleBuffer;
 
 import javax.microedition.io.Connector;
 import javax.microedition.io.StreamConnection;
@@ -23,10 +25,15 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import org.math.plot.Plot2DPanel;
+
 public class App {
 	private static StreamConnection con;
 	private static BufferedWriter writer;
 	private static BufferedReader reader;
+	private static boolean lineCapture = false;
+	
+	final static Plot2DPanel plot = new Plot2DPanel();
 	
 	private JFrame frmAutobotsControlPanel;
 	
@@ -90,10 +97,47 @@ public class App {
 			
 		(new Thread(new Runnable() {
 			public void run() {
+				DoubleBuffer db = DoubleBuffer.allocate(128);
+				CharBuffer cb = CharBuffer.allocate(128);
+				String line = null;
+				plot.addLinePlot("camera data", new double[128]);
 				while(true){
 					try {
-						if(reader.ready())
-							log.print(reader.readLine()+"\n");
+						if(reader.ready()) {
+							line = reader.readLine();
+							//if (line == null) {
+							//	break;
+							//}
+							if(line.equals("l")){
+								//log.print("inside!\n");
+								//log.print(line+"\n");
+								cb.clear();
+								while(cb.length()>0){
+									reader.read(cb);
+								}
+								//log.print("send done\n");
+								db.clear();
+								for(char c : cb.array()){
+									db.put(c);
+								}
+								
+								plot.removeAllPlots();
+								plot.addLinePlot("camera data", db.array());
+								//plot.changePlotData(0, db.array());
+								
+							}
+							else{
+								//log.print(String.valueOf(line.length())+"\n");
+								//if(line.length()>1){
+								//String sub = line.substring(0, 2);
+								//for(char c: sub.toCharArray()){
+								//	log.print( String.format("%d",Character.getNumericValue(c)) );
+								//}
+								//log.print("\n");
+								//}
+								log.print(line+"\n");
+							}
+						}
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -128,9 +172,9 @@ public class App {
 	private void initialize() {
 		frmAutobotsControlPanel = new JFrame();
 		frmAutobotsControlPanel.setTitle("Optimus Prime's Control Panel");
-		frmAutobotsControlPanel.setBounds(100, 100, 450, 300);
+		frmAutobotsControlPanel.setBounds(100, 100, 480, 640);
 		frmAutobotsControlPanel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmAutobotsControlPanel.getContentPane().setLayout(new GridLayout(2, 1, 0, 0));
+		frmAutobotsControlPanel.getContentPane().setLayout(new GridLayout(3, 1, 0, 0));
 		
 		
 		JPanel panel = new JPanel();
@@ -149,7 +193,7 @@ public class App {
 		final JTextField txtDrive = new JTextField();
 		final JTextField txtLMotor = new JTextField();
 		final JTextField txtRMotor = new JTextField();
-		final JTextField txtMode = new JTextField();
+		//final JTextField txtMode = new JTextField();
 		final JTextField txtGet = new JTextField();
 		final JTextField txtParm = new JTextField();
 		final JTextField txtData = new JTextField();
@@ -182,7 +226,7 @@ public class App {
 		right_col.add(btnGo);
 		right_col.add(btnStop);
 		right_col.add(btnMode);
-		right_col.add(txtMode);
+		right_col.add(new JPanel());
 		right_col.add(btnGet);
 		right_col.add(txtGet);
 		right_col.add(btnSet);
@@ -261,7 +305,7 @@ public class App {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				command("set", txtParm.getText()+" "+txtData.getText());
+				command("set", txtParm.getText().toLowerCase()+" "+txtData.getText());
 			}
 			
 		});
@@ -282,13 +326,13 @@ public class App {
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setAutoscrolls(true);
 		frmAutobotsControlPanel.getContentPane().add(scrollPane);
-		
+		frmAutobotsControlPanel.getContentPane().add(plot);
 		frmAutobotsControlPanel.setFocusable(true);
 		frmAutobotsControlPanel.getContentPane().addKeyListener(new KeyListener(){
 
 
 			
-			boolean driveDown = false;
+			//boolean driveDown = false;
 			
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -317,6 +361,14 @@ public class App {
 						command("s", "1");
 					}
 				}
+				if(e.getKeyCode()==KeyEvent.VK_L){
+					if(!lineCapture){
+						//lineCapture=true;
+						command("set line_capture 1");
+						//log.print("linecapture true\n");
+					}
+				}
+				
 				
 			}
 
@@ -324,7 +376,7 @@ public class App {
 			public void keyReleased(KeyEvent e) {
 				if(goToggle){
 					if(e.getKeyCode()==KeyEvent.VK_UP){
-						driveDown = false;
+						//driveDown = false;
 						command("m", "255");
 					}
 					if(e.getKeyCode()==KeyEvent.VK_DOWN){
@@ -337,6 +389,11 @@ public class App {
 				//if(e.getKeyCode()==KeyEvent.VK_ENTER){
 				//	command('d', "0");
 				//}
+				if(e.getKeyCode()==KeyEvent.VK_L){
+					lineCapture = false;
+					command("set line_capture 0");
+					//log.print("linecapture false\n");
+				}
 			}
 
 			@Override
