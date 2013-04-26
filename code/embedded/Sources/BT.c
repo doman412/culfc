@@ -82,17 +82,19 @@ void initBT(int mode){
 
 	// Ensure UART is off before changing settings
 	UART0_C2 &= ~(UART_C2_RE_MASK | UART_C2_TE_MASK);
-
+	
 	// Set baud rate
-	// (96,000,000 Hz / 115200 Hz) / 16 = 52.083, or 0x0052 + 1/16 (BFA)
+	// (96,000,000 Hz / 115200 Hz) / 16 = 52.083, or 0x0052 + 2/32 (BFA)
+	// (96,000,000 Hz / 921000 Hz) / 16 = 6.5, or 0x0006 + 16/32 (BFA)
 	// BDH[4:0] = 0x00
 	// BDL = 0x52 
 	//UART0_BDH |= 0x02;
 	//UART0_BDL |= 0x71;
 	UART0_BDH = 0;
-	UART0_BDL = 52;
-	UART0_C4 |= UART_C4_BRFA(0); 
-				
+	UART0_BDL = 6;
+	UART0_C4 |= UART_C4_BRFA(16); 	
+	
+	//UART0_C1 |= UART_C1_M_MASK;
 	// Set FIFO watermark to 1
 	UART0_RWFIFO |= UART_RWFIFO_RXWATER(1);
 	UART0_PFIFO |= UART_PFIFO_RXFE_MASK | UART_PFIFO_TXFE_MASK;
@@ -142,14 +144,18 @@ void decodeBT(){
 		readyToDecode--;
 		
 		do {
-			if (!queue_empty(&queue)) {
+			if (!queue_empty(&queue)&!queue_full(&queue)) {
 				c = pop_back(&queue);
 				sentence[i++] = c;
 			}
 			// Empty queue before reaching '\n' means error
 			// No command is executed
 			else
+			{
+				init_queue(&queue);
+				readyToDecode = 0;
 				return;
+			}
 		} while (c != 13);
 		
 		sentence[i-1] = '\0';

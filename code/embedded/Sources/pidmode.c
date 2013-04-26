@@ -10,10 +10,13 @@
 #include "FlexTimer.h"
 #include "FlexTimer1.h"
 #include "BT.h"
+#include "track.h"
 
 int moving = 0;
 int error;
 OutputMap container;
+extern TrackMap trackMap;
+int line_capture = 0;
 
 void PIDMode(void) {
 	Mode mode;
@@ -33,8 +36,8 @@ void PIDMode(void) {
 			error = GetCameraData();
 			PIDErrorControl(error, mode, &container);
 
-			updateM1(container.rightMotor);
-			updateM2(container.leftMotor);
+			updateM1(container.leftMotor);
+			updateM2(container.rightMotor);
 			updateServo(container.servo);
 
 		} else {
@@ -42,9 +45,13 @@ void PIDMode(void) {
 				moving = 1;
 				ResetButtonState();
 				//continue;
-			}			
+			}
 		}
 		decodeBT();
+		if(line_capture){
+			sendLineData();
+			line_capture = 0;
+		}
 	}
 	decodeBT();
 }

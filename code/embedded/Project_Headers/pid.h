@@ -54,6 +54,10 @@ extern float KD;
 #define K2_SPEED (-KP_SPEED - 2*KD_SPEED)
 #define K3_SPEED KD_SPEED
 
+//#define DX_HI 80
+//#define DX_LOW 40
+//#define MOTOR_SPEED 70
+
 void reset_pid();
 
 #endif /* PID_H_ */
