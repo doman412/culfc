@@ -21,7 +21,7 @@ void init_queue(Queue* queue) {
 }
  
 unsigned char queue_full(Queue* queue) {
-	return queue->size == MAX_QUEUE_SIZE;
+	return queue->size >= MAX_QUEUE_SIZE;
 }
  
 unsigned char queue_empty(Queue* queue) {

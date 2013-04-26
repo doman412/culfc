@@ -32,16 +32,16 @@ int main(void) {
 	InitFlexTimer0();
 	InitFlexTimer1();
 	initBT(1);
-	change_parameter("kp", 0.05);
+	change_parameter("kp", 0.032);
 	change_parameter("ki", 0);
-	change_parameter("kd", 0.001);
+	change_parameter("kd", 0.0022);
 	update_table();
 	
 	updateServo(1.0);
 	
-	blocking_delay(10000000);
+	blocking_delay(5000000);
 	updateServo(-1.0);
-	blocking_delay(10000000);
+	blocking_delay(5000000);
 	updateServo(0.0);
 	
 	

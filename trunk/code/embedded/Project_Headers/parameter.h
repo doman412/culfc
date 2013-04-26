@@ -10,10 +10,10 @@
 #include <derivative.h>
 #include "mode.h"
 
-#pragma define_section configtable ".configtable" ".configtable" ".configtable" far_abs RW
+//#pragma define_section configtable ".configtable" ".configtable" ".configtable" far_abs RW
 
-#define NUM_VARIABLES 8
-#define NUM_FLASH_VARIABLES 4
+#define NUM_VARIABLES 11
+#define NUM_FLASH_VARIABLES 3
 
 
 typedef struct {

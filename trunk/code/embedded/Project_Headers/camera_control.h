@@ -40,7 +40,7 @@ typedef struct {
 
 #define CAMERA_SI_DATA (BITBAND_REG(GPIOA_PDOR, CAMERA_SI_PIN))
 
-#define BLACK_WHITE_THRESHOLD (50)
+#define BLACK_WHITE_THRESHOLD (35)
 
 
 void InitializeCamera(void);

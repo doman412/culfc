@@ -27,8 +27,8 @@ uint16_t currentLine[128];
 uint16_t dataReady = 0;
 
 extern TrackMap trackMap;
-int line_capture = 0;
-int capture = 0;
+
+static int error = 0;
 
 void InitializeCamera(void) {
 	InitPortA();
@@ -111,10 +111,7 @@ void PITExpiredISR(void) {
 	//FTM2_SC |= FTM_SC_CLKS(1);
 	FTM2_CNT = 0;
 	FTM2_C1V = 480;
-	if(line_capture){
-		capture = 1;
-		sendStr("l\n");
-	}
+
 }
 
 void HandleCameraData(void) {
@@ -124,6 +121,12 @@ void HandleCameraData(void) {
 	// Therefore, index will range from 0 to 128
 	// We only want 0-127 to make it in to the array
 	currentLine[fallingEdgeCount - 1] = ADC0_RA;
+}
+
+void movingAverageFilter(){
+	for(int i = 0; i < 127; i++){
+		currentLine[i]= (currentLine[i]+currentLine[i+1])>>1;
+	}
 }
 
 void FindBlackBoundaries(void) {
@@ -137,27 +140,22 @@ void FindBlackBoundaries(void) {
 	} else {
 		currentRegion = WHITE;
 	}
-	for (i = 11; i < 101; i++) {
+	for (i = 11; i < 118; i++) {
 		derivative = currentLine[i] - currentLine[i - 1];
 		if (currentRegion == BLACK) {
-			if (derivative >= 15) {
+			if (derivative >= BLACK_WHITE_THRESHOLD) {
 				AddRisingEdge(i);
 				currentRegion = WHITE;
 			}
 		} else {
-			if (derivative <= -15) {
+			if (derivative <= -BLACK_WHITE_THRESHOLD) {
 				AddFallingEdge(i);
 				currentRegion = BLACK;
 			}
 		}
 	}
+	error = ((trackMap.fallingEdges[0] + trackMap.risingEdges[0]) / 2) - 63;
 	dataReady = 1;
-	//if(line_capture){
-	//	line_capture = 0;
-	//	sendStr("l\n");
-	//	for(i=0; i<128; i++)
-	//		sendChar(currentLine[i]);
-	//}
 }
 
 int FinishLineDetected(void) {
@@ -170,9 +168,7 @@ int FinishLineDetected(void) {
 
 	int index = 0;
 
-	while (dataReady == 0) {
-		;
-	}
+	while (dataReady == 0) ;
 
 	if (trackMap.fallingEdgeCount > 1 && trackMap.risingEdgeCount > 1) {
 
@@ -206,17 +202,12 @@ void CamFalling(void) {
 	fallingEdgeCount++;
 	CAMERA_SI_DATA = 0;
 	
-	if(capture){
-		if(fallingEdgeCount > 1){
-			sendChar(currentLine[fallingEdgeCount-1]);
-		}
-	}
-	
 	if (fallingEdgeCount == 129) {
-		line_capture=capture=0;
+		//line_capture=capture=0;
 		FTM2_C1V = 0;
 		//FTM2_SC = 0;
 		fallingEdgeCount = 0;
+		//movingAverageFilter();
 		FindBlackBoundaries();
 	} else {
 		StartADCConversion(ADC0_BASE_PTR, 0);
@@ -225,16 +216,14 @@ void CamFalling(void) {
 }
 
 int GetCameraData(void) {
-	static int error;
-	while (dataReady == 0) {
-		;
-	}
-
-	//	if (trackMap.fallingEdgeCount == 1 && trackMap.risingEdgeCount == 1) {
-	error = ((trackMap.fallingEdges[0] + trackMap.risingEdges[0]) / 2) - 63;
-	//	}
-	//sendStr("err\n");
-	//sendChar(error);
-	//sendChar("\n");
+	while (dataReady == 0) ;
 	return error;
+}
+
+void sendLineData(){
+	sendStr("l\n");
+	for(int i=0; i<128; i++)
+		sendChar(currentLine[i] >> 1);
+	sendStr("e\n");
+	sendChar(error);
 }
