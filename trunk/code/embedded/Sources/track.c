@@ -25,3 +25,9 @@ void AddRisingEdge(uint16_t index) {
 	trackMap.risingEdgeCount++;
 }
 
+void RemoveLastFallingEdge(void) {
+	if (trackMap.fallingEdgeCount) {
+		trackMap.fallingEdgeCount = trackMap.fallingEdgeCount -1 ;
+	}
+}
+
