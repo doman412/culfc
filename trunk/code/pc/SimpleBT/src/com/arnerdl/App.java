@@ -1,13 +1,18 @@
 package com.arnerdl;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -17,6 +22,7 @@ import java.nio.DoubleBuffer;
 import javax.microedition.io.Connector;
 import javax.microedition.io.StreamConnection;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -28,11 +34,17 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import org.math.plot.Plot2DPanel;
 
 public class App {
+	private final static String version = "2.0";
 	private static StreamConnection con;
 	private static BufferedWriter writer;
 	private static BufferedReader reader;
-	private static boolean lineCapture = false;
+	//private static boolean lineCapture = false;
 	
+	private static File f;
+	private static FileWriter fr;
+	private static BufferedWriter br;
+	
+	final static JCheckBox checkSave = new JCheckBox("Save?");
 	final static Plot2DPanel plot = new Plot2DPanel();
 	
 	private JFrame frmAutobotsControlPanel;
@@ -60,7 +72,7 @@ public class App {
 		}	}
 	
 	public static void main(String[] args) {
-		
+			
 		try {
 			con = (StreamConnection)Connector.open("btspp://000666006C08:1");
 			writer = new BufferedWriter(new OutputStreamWriter(con.openOutputStream()));
@@ -71,6 +83,21 @@ public class App {
 		}
 //			reader = con.openDataInputStream();
 
+		f = new File("line_capture.csv");
+		if(f.exists()){
+			f.delete();
+		}
+		
+		try {
+			f.createNewFile();
+			fr = new FileWriter(f);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		br = new BufferedWriter(fr);
+		
+		
 /*		(new Thread(new Runnable(){
 			public void run() {
 				// TODO Auto-generated method stub
@@ -99,6 +126,7 @@ public class App {
 			public void run() {
 				DoubleBuffer db = DoubleBuffer.allocate(128);
 				CharBuffer cb = CharBuffer.allocate(128);
+				byte error = 0;
 				String line = null;
 				plot.addLinePlot("camera data", new double[128]);
 				while(true){
@@ -118,13 +146,30 @@ public class App {
 								//log.print("send done\n");
 								db.clear();
 								for(char c : cb.array()){
-									db.put(c);
+									db.put(c*2);
+									if(checkSave.isSelected())
+										br.write((double)(c*2)+",");
 								}
+//								if(checkSave.isSelected())
+//									br.write("\n");
 								
 								plot.removeAllPlots();
 								plot.addLinePlot("camera data", db.array());
+								plot.setFixedBounds(0, 0, 128);
+								plot.setFixedBounds(1, 0, 255);	
 								//plot.changePlotData(0, db.array());
 								
+							}
+							else if(line.equals("e")){
+								while(!reader.ready());
+								error = (byte)reader.read();
+								error +=63;
+								if(checkSave.isSelected())
+									br.write(error+"\n");
+								//System.out.println(error);
+								plot.addLinePlot("error", Color.RED, new double[][]{{error,0},{error,255}});
+								plot.setFixedBounds(0, 0, 128);
+								plot.setFixedBounds(1, 0, 255);
 							}
 							else{
 								//log.print(String.valueOf(line.length())+"\n");
@@ -175,7 +220,16 @@ public class App {
 		frmAutobotsControlPanel.setBounds(100, 100, 480, 640);
 		frmAutobotsControlPanel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmAutobotsControlPanel.getContentPane().setLayout(new GridLayout(3, 1, 0, 0));
-		
+		frmAutobotsControlPanel.addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent e) {
+				try {
+					fr.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		
 		JPanel panel = new JPanel();
 		frmAutobotsControlPanel.getContentPane().add(panel);
@@ -195,11 +249,15 @@ public class App {
 		final JTextField txtRMotor = new JTextField();
 		//final JTextField txtMode = new JTextField();
 		final JTextField txtGet = new JTextField();
-		final JTextField txtParm = new JTextField();
-		final JTextField txtData = new JTextField();
+		final JTextField txtParm1 = new JTextField("kp");
+		final JTextField txtData1 = new JTextField();
+		final JTextField txtParm2 = new JTextField("ki");
+		final JTextField txtData2 = new JTextField();
+		final JTextField txtParm3 = new JTextField("kd");
+		final JTextField txtData3 = new JTextField();
 		final JTextField txtCmd = new JTextField();
 		final JTextField txtArgs = new JTextField();
-
+		
 		JButton btnServo = new JButton("Servo");
 		JButton btnDrive = new JButton("Drive");
 		JButton btnLMotor = new JButton("Left Motor");
@@ -226,13 +284,19 @@ public class App {
 		right_col.add(btnGo);
 		right_col.add(btnStop);
 		right_col.add(btnMode);
-		right_col.add(new JPanel());
+		//right_col.add(new JPanel());
+		right_col.add(checkSave);
+		//right_col.add(new JPanel());
 		right_col.add(btnGet);
 		right_col.add(txtGet);
 		right_col.add(btnSet);
 		right_col.add(new JPanel());
-		right_col.add(txtParm);
-		right_col.add(txtData);
+		right_col.add(txtParm1);
+		right_col.add(txtData1);
+		right_col.add(txtParm2);
+		right_col.add(txtData2);
+		right_col.add(txtParm3);
+		right_col.add(txtData3);
 		
 		btnServo.addActionListener(new ActionListener(){
 
@@ -305,7 +369,9 @@ public class App {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				command("set", txtParm.getText().toLowerCase()+" "+txtData.getText());
+				command("set", txtParm1.getText().toLowerCase()+" "+txtData1.getText());
+				command("set", txtParm2.getText().toLowerCase()+" "+txtData2.getText());
+				command("set", txtParm3.getText().toLowerCase()+" "+txtData3.getText());
 			}
 			
 		});
@@ -319,7 +385,7 @@ public class App {
 		});
 		
 		
-		JTextArea textArea = new JTextArea("PrimeOS v1.1\nNow Logged into Optimus Prime\nWelcome to the Optimus Prime Configuration System.\n");
+		JTextArea textArea = new JTextArea("PrimeOS v"+version+"\nNow Logged into Optimus Prime\nWelcome to the Optimus Prime Configuration System.\n");
 		App.log = new AutobotsLog(textArea);
 		
 		JScrollPane scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
@@ -345,8 +411,11 @@ public class App {
 				if(e.getKeyCode()==KeyEvent.VK_ENTER){
 					command("stop");
 				}
+				if(e.getKeyCode()==KeyEvent.VK_M){
+					command("mode");
+				}
 				
-				if(goToggle){
+				//if(goToggle){
 					if(e.getKeyCode()==KeyEvent.VK_UP){
 						//driveDown = true;
 						command("m", "60");
@@ -360,13 +429,14 @@ public class App {
 					if(e.getKeyCode()==KeyEvent.VK_RIGHT){
 						command("s", "1");
 					}
-				}
+				//}
 				if(e.getKeyCode()==KeyEvent.VK_L){
-					if(!lineCapture){
+					//if(!lineCapture){
 						//lineCapture=true;
 						command("set line_capture 1");
+
 						//log.print("linecapture true\n");
-					}
+					//}
 				}
 				
 				
@@ -374,7 +444,7 @@ public class App {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				if(goToggle){
+				//if(goToggle){
 					if(e.getKeyCode()==KeyEvent.VK_UP){
 						//driveDown = false;
 						command("m", "255");
@@ -385,12 +455,12 @@ public class App {
 					if(e.getKeyCode()==KeyEvent.VK_RIGHT || e.getKeyCode()==KeyEvent.VK_LEFT){
 						command("s", "0");
 					}
-				}
+				//}
 				//if(e.getKeyCode()==KeyEvent.VK_ENTER){
 				//	command('d', "0");
 				//}
 				if(e.getKeyCode()==KeyEvent.VK_L){
-					lineCapture = false;
+				//	lineCapture = false;
 					command("set line_capture 0");
 					//log.print("linecapture false\n");
 				}
