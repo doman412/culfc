@@ -25,6 +25,7 @@ uint16_t prevEdgeCount;
 uint16_t currentLine[128];
 
 uint16_t dataReady = 0;
+uint16_t blackLength = 0;
 
 extern TrackMap trackMap;
 
@@ -95,7 +96,7 @@ void ConfigureAndStartPIT(void) {
 	// Turn on power to PIT
 	SIM_SCGC6 |= SIM_SCGC6_PIT_MASK;
 	PIT_MCR = 0x01; // Turn on the PIT
-	PIT_LDVAL0 = 479999;
+	PIT_LDVAL0 = 239999;
 	PIT_TCTRL0 = PIT_TCTRL_TIE_MASK; // Enable interrupts
 	PIT_TCTRL0 |= PIT_TCTRL_TEN_MASK; // Turn on the timer
 }
@@ -144,13 +145,22 @@ void FindBlackBoundaries(void) {
 		derivative = currentLine[i] - currentLine[i - 1];
 		if (currentRegion == BLACK) {
 			if (derivative >= BLACK_WHITE_THRESHOLD) {
-				AddRisingEdge(i);
+				if (blackLength >= 10) {
+					AddRisingEdge(i);
+				}
+				else {
+					RemoveLastFallingEdge();
+				}
 				currentRegion = WHITE;
+			}
+			else {
+				blackLength++;
 			}
 		} else {
 			if (derivative <= -BLACK_WHITE_THRESHOLD) {
 				AddFallingEdge(i);
 				currentRegion = BLACK;
+				blackLength = 0;
 			}
 		}
 	}
